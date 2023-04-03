@@ -9,8 +9,8 @@ const UserSchema = new mongoose.Schema({
   },
   userPw: {
     type: String,
-    require: [true, 'Please provide user password'],
-    minlength: 6,
+    required: [true, 'Please enter password for your account'],
+    minlength: [8, 'Your password must be a t leeast 8 characters long'],
     maxlength: 30,
   },
   name: {
@@ -24,5 +24,9 @@ UserSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
   this.userPw = await bcrypt.hash(this.userPw, salt);
 });
+
+UserSchema.methods.comparePassword = async function (enterPassword) {
+  return await bcrypt.compare(enterPassword, this.userPw);
+};
 
 module.exports = mongoose.model('users', UserSchema);
