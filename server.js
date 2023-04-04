@@ -20,8 +20,8 @@ app.use('/public', express.static('public'));
 app.use('/admin', adminRouter);
 app.use('/tt', noticeRouter);
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/views/index.html'));
-app.get('/write', (req, res) => res.sendFile(__dirname + '/views/write.html'));
+app.get('/', (req, res) => res.render('index.ejs'));
+app.get('/write', (req, res) => res.sendFile(__dirname + '/views/write.ejs'));
 
 const start = async () => {
   try {

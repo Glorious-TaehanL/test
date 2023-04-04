@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const StatusCode = require('http-status-codes');
 const JWT = require('jsonwebtoken');
 const JWT_SECRET_KEY = process.env.JWT_KEY;
 
@@ -21,6 +22,11 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     console.log('Please provide correct Id or Password');
   }
+  //Create token
+  const token = user.createJWT();
+  // res.status(StatusCode.OK).json({ user: { name: user.name }, token });
+  res.cookie('jwt', token);
+  return res.render('list.ejs');
 };
 
 const createUser = (req, res) => {
