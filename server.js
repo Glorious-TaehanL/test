@@ -3,13 +3,34 @@ const express = require('express');
 const connectDB = require('./db/connect');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+
+const passport = require('passport');
+const passportConfig = require('./passport');
+const session = require('express-session');
+
 const app = express();
+passportConfig();
 const port = process.env.PORT;
 
 const adminRouter = require('./routes/adminRoute');
 const noticeRouter = require('./routes/noticeRoute');
 
 const Notice = require('./models/Notice');
+
+app.use(
+  session({
+    secret: '비밀코드',
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));

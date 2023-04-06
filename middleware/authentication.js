@@ -1,22 +1,11 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-
-const authentication = async (req, res, next) => {
-  // check header
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer')) {
-    res.send('authentication invalid');
-  }
-  const token = authHeader.split(' ')[1];
-
-  try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-    // attach the user to the job routes
-    req.user = { userId: payload.userId };
+const isLoggedin = (req, res, next) => {
+  if (req.user) {
     next();
-  } catch (error) {
-    res.send('authentication invalid');
+  } else {
+    res.send('로그인먼저하는게좋을껀데요?');
   }
 };
 
-module.exports = authentication;
+module.exports = {
+  isLoggedin,
+};
