@@ -3,6 +3,7 @@ const express = require('express');
 const connectDB = require('./db/connect');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+const { isLoggedin } = require('./middleware/authentication');
 
 const passport = require('passport');
 const passportConfig = require('./passport');
@@ -38,7 +39,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static('public'));
 
-app.use('/admin', adminRouter);
+app.use('/admin', isLoggedin, adminRouter);
 app.use('/tt', noticeRouter);
 
 app.get('/', (req, res) => res.render('index.ejs'));
