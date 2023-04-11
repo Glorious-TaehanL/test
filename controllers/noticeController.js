@@ -18,6 +18,7 @@ const addPost = (req, res) => {
       Notice.create({ id: counter, title: req.body.title, content: req.body.content })
         .then(function () {
           console.log('Successfull create ');
+          res.redirect('/notice/list');
         })
         .catch(function (error) {
           console.log(error);
@@ -26,8 +27,6 @@ const addPost = (req, res) => {
     .catch(function (error) {
       console.log(error);
     });
-
-  res.send('전송완료');
 };
 
 /**
@@ -58,7 +57,7 @@ const deletePost = (req, res) => {
 const detailPost = (req, res) => {
   Notice.findOne({ id: req.params.id })
     .then(function (result) {
-      res.render('detail.ejs', { post: result });
+      res.render('detail.ejs', { user: req.user, post: result });
     })
     .catch(function () {});
 };

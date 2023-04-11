@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 router.get('/list', displayListPage);
 router.get('/detail/:id', detailPost);
 router.get('/edit/:id', displayEditPage);
+router.get('/write', (req, res) => res.render('write.ejs'));
 
 router.post('/add', addPost);
 router.put('/edit', editPost);

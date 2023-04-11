@@ -19,18 +19,17 @@
         <h4>게시판</h4>
         <ul class="list-group">
           <% for(var i = 0; i < items.length; i++){ %>
-            <li class="list-group-item list-group-item-action">
+            <li class="list-group-item list-group-item-action" data-id="<%= items[i].id %>">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%= items[i].title %> </h5>
                 <small>3 days ago</small>
               </div> 
-              <button type="button" class="btn btn-outline-danger delete-btn" data-id="<%= items[i].id %>">
-                삭제
-              </button>
-              <!-- </a> -->
               <p class="mb-1"><%= items[i].content %></p>
               <small>And some small print.</small>
-            </li>
+              <button type="button" class="btn btn-outline-danger delete-btn" data-id="<%= items[i].id %>">
+                  삭제
+              </button>
+            </li> 
             <% } %>
           
         </ul>
@@ -44,7 +43,7 @@
           var currentObj = $(this);
           $.ajax({
             method:'DELETE',
-            url: '/tt/delete',
+            url: '/notice/delete',
             data:{_id:postId}
           }).done(function(result){
             console.log(result);
