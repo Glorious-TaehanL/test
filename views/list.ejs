@@ -20,6 +20,7 @@
         <ul class="list-group">
           <% for(var i = 0; i < items.length; i++){ %>
             <li class="list-group-item list-group-item-action" data-id="<%= items[i].id %>">
+              <a href="detail/<%= items[i].id %>">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%= items[i].title %> </h5>
                 <small>3 days ago</small>
@@ -29,6 +30,7 @@
               <button type="button" class="btn btn-outline-danger delete-btn" data-id="<%= items[i].id %>">
                   삭제
               </button>
+            </a>
             </li> 
             <% } %>
           

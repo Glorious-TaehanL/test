@@ -15,6 +15,7 @@ const port = process.env.PORT;
 
 const adminRouter = require('./routes/adminRoute');
 const authRouter = require('./routes/authRoute');
+const courseRouter = require('./routes/courseRoute');
 const noticeRouter = require('./routes/noticeRoute');
 
 const Notice = require('./models/Notice');
@@ -42,11 +43,10 @@ app.use('/public', express.static('public'));
 
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
+app.use('/course', courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 
 app.get('/', (req, res) => res.render('index.ejs'));
-app.get('/login', (req, res) => res.render('login.ejs', { message: '' }));
-app.get('/write', (req, res) => res.sendFile(__dirname + '/views/write.ejs'));
 
 const start = async () => {
   try {
