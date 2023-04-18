@@ -2,6 +2,8 @@ const StatusCodes = require('http-status-codes');
 const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
 
+const notice_row_count = 2;
+
 /**
  *
  * @brief : add Post
@@ -109,10 +111,28 @@ const displayEditPage = (req, res) => {
  * @param {*} req
  * @return list.ejs file
  * @return_param {Object} total_items
+ * Sort descending
  */
 const displayListPage = async (req, res) => {
-  const items = await Notice.find({});
-  res.render('list.ejs', { items: items });
+  var pagenum = 1;
+  const totalNotice = await (await Notice.find({}, 'id')).length;
+  const test = await Notice.find({}, 'id');
+  if (typeof req.query.indexnum !== 'undefined') {
+    console.log('no undefined');
+    var items = await Notice.find({})
+      .sort({ id: -1 })
+      .skip(notice_row_count * req.query.indexnum)
+      .limit(notice_row_count);
+    pagenum = parseInt(req.query.indexnum) + 1;
+  } else {
+    var items = await Notice.find({}).sort({ id: -1 }).limit(notice_row_count);
+  }
+  // var pagenation = items.length() / notice_row_count;
+  console.log(test);
+  console.log(test.sort({ id: -1 }));
+  console.log(Math.ceil(totalNotice / notice_row_count));
+
+  res.render('list.ejs', { items: items, pageindex: { pagenum: pagenum } });
 };
 
 module.exports = {
