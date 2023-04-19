@@ -15,65 +15,66 @@
   <body>
     <!-- navigation load -->
    <%- include('nav.ejs'); %>
-      <!-- <div class="container">
-        <h4>게시판</h4>
-        <ul class="list-group">
-          <% for(var i = 0; i < items.length; i++){ %>
-            <li class="list-group-item list-group-item-action" data-id="<%= items[i].id %>">
-              <a href="detail/<%= items[i].id %>">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"><%= items[i].title %> </h5>
-                <small>3 days ago</small>
-              </div> 
-              <p class="mb-1"><%= items[i].content %></p>
-              <small>And some small print.</small>
-              <button type="button" class="btn btn-outline-danger delete-btn" data-id="<%= items[i].id %>">
-                  삭제
-              </button>
-            </a>
-            </li> 
-            <% } %>
-          
-        </ul>
-        
-      </div> -->
-
-
       <section class="notice">
         <div class="page-title">
               <div class="container">
-                  <h3>공지사항</h3>
+                  <h3>공지사항 관리</h3>
               </div>
           </div>
         
         <!-- board list area -->
           <div id="board-list">
               <div class="container">
+                <div class="notice-act-section">
+                  <button type="button" class="btn btn-light" onclick="location.href='write' ">
+                    글쓰기
+                  </button>
+                </div>
                   <table class="board-table">
                       <thead>
                       <tr>
                           <th scope="col" class="th-num">번호</th>
                           <th scope="col" class="th-title">제목</th>
                           <th scope="col" class="th-date">등록일</th>
+                          <th scope="col" class="th-settings">관리</th>
                       </tr>
                       </thead>
                       <tbody>
-                        <%=  pageindex %>
                         <% for(var i = 0; i < items.length; i++){ %>
                           <tr>
                               <td><%= items[i].id %></td>
                               <th>
-                                <a href="#!"><%= items[i].title %></a>
-                                <p>테스트</p>
+                                <a href="detail/<%= items[i].id %>"><%= items[i].title %></a>
                               </th>
-                              <td>2017.07.13</td>
+                              <td><%= moment(items[i].createTime).format('YYYY-MM-DD  hh:mm:ss') %></td>
+                              <td>
+                                <button class="btn btn-outline-info" >수정</button>
+                                <button class="btn btn-outline-danger">삭제</button>
+                              </td>
                           </tr>
                       <% } %>
                       </tbody>
                   </table>
+                  
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1"> << </a>
+                      </li>
+                      <% for( var index = 1; index <= pageindex.pagination; index++ ) { %>
+                        <li class="page-item <% if(pageindex.pagenum == index){ %> active <% } %>">
+                          <a class="page-link" href="list?indexnum=<%= index %>"> 
+                            <%= index %>
+                          </a>
+                        </li>
+                      <% } %>
+                      <li class="page-item">
+                        <a class="page-link" href="#"> >> </a>
+                      </li>
+                    </ul>
+                  </nav>
               </div>
           </div>
-
       </section>
 
 

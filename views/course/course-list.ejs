@@ -19,7 +19,7 @@
         <h4>강의코스</h4>
         <button type="button" class="btn btn-outline-success" onclick="location.href='/course/add'">강의등록</button>
         <% for(var i = 0 ; i < courses.length ; i++) { %>
-        <div class="card course- <%= i %>" style="width: 18rem;">
+        <div class="card course-<%= i %>" style="width: 18rem;">
           <div class="image-container" style="width: 270px; height: 180px; background-image: url('/public/images/<%= courses[i].thumbnail %>');"></div>
           <span>강의 이미지</span>
             <h5 class="card-title"><%= courses[i].title %></h5>
@@ -29,6 +29,46 @@
           <% } %>
         </div>
       </div>
+      <section class="notice">
+        <div class="page-title">
+              <div class="container">
+                  <h3>공지사항</h3>
+              </div>
+          </div>
+        
+        <!-- board list area -->
+          <div id="board-list">
+              <div class="container">
+                <div class="notice-act-section">
+                  <button type="button" class="btn btn-light" onclick="location.href='write' ">
+                    글쓰기
+                  </button>
+                </div>
+                  <table class="board-table">
+                      <thead>
+                      <tr>
+                          <th scope="col" class="th-num">번호</th>
+                          <th scope="col" class="th-title">제목</th>
+                          <th scope="col" class="th-date">등록일</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 0; i < courses.length; i++){ %>
+                          <tr>
+                              <td><%= courses[i].id %></td>
+                              <th>
+                                <a href="detail/<%= courses[i].id %>"><%= courses[i].title %></a>
+                                <p>테스트</p>
+                              </th>
+                              <td>2017.07.13</td>
+                          </tr>
+                      <% } %>
+                      </tbody>
+                  </table>
+                  
+              </div>
+          </div>
+      </section>
 
 
       <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
