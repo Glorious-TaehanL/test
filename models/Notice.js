@@ -13,6 +13,7 @@ const NoticeSchema = new mongoose.Schema({
     type: String,
     require: [true, 'Please provide content.'],
   },
+  createTime: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('notices', NoticeSchema);

@@ -91,14 +91,21 @@ table {
   }
   
   .board-table .th-num {
-    width: 100px;
+    width: 10%;
     text-align: center;
   }
   
   .board-table .th-date {
-    width: 200px;
+    width: 20%;
   }
   
+  .board-table .th-title {
+    width: 50%;
+  }
+
+  .board-table .th-settings {
+    width: 20%;
+  }
   .board-table th, .board-table td {
     padding: 14px 0;
   }

@@ -1,8 +1,9 @@
 const StatusCodes = require('http-status-codes');
 const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
+const moment = require('moment');
 
-const notice_row_count = 2;
+const NOTICE_ROW_COUNT = 10;
 
 /**
  *
@@ -114,25 +115,21 @@ const displayEditPage = (req, res) => {
  * Sort descending
  */
 const displayListPage = async (req, res) => {
-  var pagenum = 1;
   const totalNotice = await (await Notice.find({}, 'id')).length;
-  const test = await Notice.find({}, 'id');
+  const totalNoticePagination = Math.ceil(totalNotice / NOTICE_ROW_COUNT);
+  var pagenum = 1;
+
   if (typeof req.query.indexnum !== 'undefined') {
-    console.log('no undefined');
     var items = await Notice.find({})
       .sort({ id: -1 })
-      .skip(notice_row_count * req.query.indexnum)
-      .limit(notice_row_count);
-    pagenum = parseInt(req.query.indexnum) + 1;
+      .skip(NOTICE_ROW_COUNT * (req.query.indexnum - 1))
+      .limit(NOTICE_ROW_COUNT);
+    pagenum = parseInt(req.query.indexnum);
   } else {
-    var items = await Notice.find({}).sort({ id: -1 }).limit(notice_row_count);
+    var items = await Notice.find({}).sort({ id: -1 }).limit(NOTICE_ROW_COUNT);
   }
-  // var pagenation = items.length() / notice_row_count;
-  console.log(test);
-  console.log(test.sort({ id: -1 }));
-  console.log(Math.ceil(totalNotice / notice_row_count));
 
-  res.render('list.ejs', { items: items, pageindex: { pagenum: pagenum } });
+  res.render('list.ejs', { items: items, pageindex: { pagenum: pagenum, pagination: totalNoticePagination }, moment });
 };
 
 module.exports = {
