@@ -44,12 +44,15 @@
                           <tr>
                               <td><%= items[i].id %></td>
                               <th>
-                                <a href="detail/<%= items[i].id %>"><%= items[i].title %></a>
+                                <!-- <a href="detail/<%= items[i].id %>"> -->
+                                  <%= items[i].title %>
+                                <!-- </a> -->
                               </th>
                               <td><%= moment(items[i].createTime).format('YYYY-MM-DD  hh:mm:ss') %></td>
                               <td>
-                                <button class="btn btn-outline-info" >수정</button>
-                                <button class="btn btn-outline-danger">삭제</button>
+                                <button class="btn btn-light"  onclick="location.href='detail/<%= items[i].id %>'" >미리보기</button>
+                                <button class="btn btn-light" onclick="location.href='edit/<%= items[i].id %>'"  >수정</button>
+                                <button class="btn btn-light">삭제</button>
                               </td>
                           </tr>
                       <% } %>
@@ -69,7 +72,7 @@
                         </li>
                       <% } %>
                       <li class="page-item">
-                        <a class="page-link" href="#"> >> </a>
+                        <a class="page-link" href="#" > >> </a>
                       </li>
                     </ul>
                   </nav>

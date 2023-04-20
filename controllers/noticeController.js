@@ -3,7 +3,7 @@ const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
 const moment = require('moment');
 
-const NOTICE_ROW_COUNT = 10;
+const NOTICE_ROW_COUNT = 12;
 
 /**
  *
@@ -78,7 +78,7 @@ const editPost = (req, res) => {
   console.log(req.body);
   Notice.updateOne({ id: parseInt(req.body.id) }, { $set: { title: req.body.title, content: req.body.content } })
     .then(function () {
-      res.status(StatusCodes.OK).redirect('/tt/list');
+      res.status(StatusCodes.OK).redirect('/notice/list');
     })
     .catch(function () {});
 };

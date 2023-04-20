@@ -18,15 +18,16 @@
       <div class="container">
         <h4>강의코스</h4>
         <button type="button" class="btn btn-outline-success" onclick="location.href='/course/add'">강의등록</button>
+        <div class="container">
         <% for(var i = 0 ; i < courses.length ; i++) { %>
         <div class="card course-<%= i %>" style="width: 18rem;">
           <div class="image-container" style="width: 270px; height: 180px; background-image: url('/public/images/<%= courses[i].thumbnail %>');"></div>
-          <span>강의 이미지</span>
             <h5 class="card-title"><%= courses[i].title %></h5>
             <p class="card-text"><%= courses[i].description %></p>
             <a href="#" class="btn btn-primary">강의 연결 링크</a>
           </div>
           <% } %>
+        </div>
         </div>
       </div>
       <section class="notice">
@@ -40,15 +41,12 @@
           <div id="board-list">
               <div class="container">
                 <div class="notice-act-section">
-                  <button type="button" class="btn btn-light" onclick="location.href='write' ">
-                    글쓰기
-                  </button>
                 </div>
                   <table class="board-table">
                       <thead>
                       <tr>
                           <th scope="col" class="th-num">번호</th>
-                          <th scope="col" class="th-title">제목</th>
+                          <th scope="col" class="th-title">강의명</th>
                           <th scope="col" class="th-date">등록일</th>
                       </tr>
                       </thead>
@@ -69,12 +67,5 @@
               </div>
           </div>
       </section>
-
-
-      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
   </body>
 </html>
