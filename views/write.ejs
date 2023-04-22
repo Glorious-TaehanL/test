@@ -1,73 +1,87 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-    <!-- navigation load -->
-    <%- include('nav.ejs'); %>
 
-  <h4 class="container mt-4"><strong>글 작성페이지</strong></h4>
+   <%- include('header.ejs') %>
+   <!-- Layout wrapper -->
+   <div class="layout-wrapper layout-content-navbar">
+     <div class="layout-container">
+       <!-- Menu -->
+       <%- include('menu.ejs') %>
+       <!-- /Menu -->
 
-  <div class="container mt-3">
-    <form action="/notice/add" method="POST" onsubmit="validateMyForm();">
-      <div class="form-group">
-        <label>공지사항 </label>
-        <input type="text" class="form-control" name="title">
-      </div>
-      <div class="form-group">
-        <label>내용</label>
-        <textarea id="summernote"  name="content"></textarea>
-      </div>
-      <button type="submit" class="submit-btn btn btn-outline-secondary">Submit</button>
-    </form>
-  </div>
-  
-  <script>
-    $('#summernote').summernote({
-      placeholder: '',
-      tabsize: 2,
-       // 에디터 높이
-	    height: 250,
-      // 에디터 한글 설정
-      lang: "ko-KR",
-      // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
-      focus : true,
-      toolbar: [
-          // 글꼴 설정
-          ['fontname', ['fontname']],
-          // 글자 크기 설정
-          ['fontsize', ['fontsize']],
-          // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-          ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-          // 글자색
-          ['color', ['forecolor','color']],
-          // 표만들기
-          ['table', ['table']],
-          // 글머리 기호, 번호매기기, 문단정렬
-          ['para', ['ul', 'ol', 'paragraph']],
-          // 줄간격
-          ['height', ['height']],
-          // 링크첨부
-          ['insert',['link']],
-        ],
-      // 추가한 폰트사이즈
-      fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-    });
-    function validateMyForm()
-    {
-      $('textarea[name="content"]').html($('.summernote').code());
-      alert("validations passed");
-      return true;
-    }
-  </script>
+       <!-- Layout container -->
+       <div class="layout-page">
+        <!-- Navbar -->
+        <%- include('navbar.ejs') %>
+        <!-- /Navbar -->
 
-  <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
-  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
-</body>
-</html>
+         <!-- Content wrapper -->
+         <div class="content-wrapper">
+
+          <h4 class="container mt-4"><strong>글 작성페이지</strong></h4>
+
+          <div class="container mt-3">
+            <form action="/notice/add" method="POST" onsubmit="validateMyForm();">
+              <div class="form-group">
+                <label>공지사항 </label>
+                <input type="text" class="form-control" name="title">
+              </div>
+              <div class="form-group">
+                <label>내용</label>
+                <textarea id="summernote"  name="content"></textarea>
+              </div>
+              <button type="submit" class="submit-btn btn btn-outline-secondary">Submit</button>
+            </form>
+          </div>
+          
+          <script>
+            $('#summernote').summernote({
+              placeholder: '',
+              tabsize: 2,
+               // 에디터 높이
+              height: 250,
+              // 에디터 한글 설정
+              lang: "ko-KR",
+              // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
+              focus : true,
+              toolbar: [
+                  // 글꼴 설정
+                  ['fontname', ['fontname']],
+                  // 글자 크기 설정
+                  ['fontsize', ['fontsize']],
+                  // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+                  ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+                  // 글자색
+                  ['color', ['forecolor','color']],
+                  // 표만들기
+                  ['table', ['table']],
+                  // 글머리 기호, 번호매기기, 문단정렬
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  // 줄간격
+                  ['height', ['height']],
+                  // 링크첨부
+                  ['insert',['link']],
+                ],
+              // 추가한 폰트사이즈
+              fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+            });
+            function validateMyForm()
+            {
+              $('textarea[name="content"]').html($('.summernote').code());
+              alert("validations passed");
+              return true;
+            }
+          </script>
+          
+
+           </div>
+
+           <div class="content-backdrop fade"></div>
+         </div>
+         <!-- Content wrapper -->
+       </div>
+       <!-- / Layout page -->
+     </div>
+
+     <!-- Overlay -->
+     <div class="layout-overlay layout-menu-toggle"></div>
+   </div>
+   <%- include('footer.ejs') %>

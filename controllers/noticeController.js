@@ -2,8 +2,10 @@ const StatusCodes = require('http-status-codes');
 const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
 const moment = require('moment');
-
+const breadcrum = '공지사항 / ';
 const NOTICE_ROW_COUNT = 12;
+
+var pageBreadCrumb = '';
 
 /**
  *
@@ -75,7 +77,7 @@ const detailPost = (req, res) => {
  * @return list page.
  */
 const editPost = (req, res) => {
-  console.log(req.body);
+  pageBreadCrumb = breadcrum + ' 공지사항 추가';
   Notice.updateOne({ id: parseInt(req.body.id) }, { $set: { title: req.body.title, content: req.body.content } })
     .then(function () {
       res.status(StatusCodes.OK).redirect('/notice/list');
@@ -85,18 +87,27 @@ const editPost = (req, res) => {
 
 /**
  *
+ * @param {*} req
+ * @param {*} res
+ */
+const displayWritePage = (req, res) => {
+  res.render('write.ejs', { user: req.user });
+};
+/**
+ *
  * @brief Display to edit Post page
  *
  * @param {*} id : only provide post id(#Sequence counter) ( not _id )
  * @return page : load post information by id
  */
 const displayEditPage = (req, res) => {
-  console.log(req.params.id);
+  pageBreadCrumb = breadcrum + '수정';
+
   Notice.findOne({ id: parseInt(req.params.id) })
     .then(function (result) {
       console.log(result);
       if (result) {
-        res.render('edit.ejs', { post: result });
+        res.render('edit.ejs', { user: req.user, pageinfo: pageBreadCrumb, post: result });
       } else {
         // not found post by id (err)
         res.send('null');
@@ -118,6 +129,7 @@ const displayListPage = async (req, res) => {
   const totalNotice = await (await Notice.find({}, 'id')).length;
   const totalNoticePagination = Math.ceil(totalNotice / NOTICE_ROW_COUNT);
   var pagenum = 1;
+  pageBreadCrumb = breadcrum + '리스트';
 
   if (typeof req.query.indexnum !== 'undefined') {
     var items = await Notice.find({})
@@ -129,7 +141,7 @@ const displayListPage = async (req, res) => {
     var items = await Notice.find({}).sort({ id: -1 }).limit(NOTICE_ROW_COUNT);
   }
 
-  res.render('list.ejs', { items: items, pageindex: { pagenum: pagenum, pagination: totalNoticePagination }, moment });
+  res.render('list.ejs', { user: req.user, pageinfo: pageBreadCrumb, items: items, pageindex: { pagenum: pagenum, pagination: totalNoticePagination }, moment });
 };
 
 module.exports = {
@@ -137,6 +149,7 @@ module.exports = {
   deletePost,
   detailPost,
   editPost,
+  displayWritePage,
   displayEditPage,
   displayListPage,
 };

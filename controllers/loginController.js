@@ -20,7 +20,7 @@ const login = async (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.redirect('/');
+      res.render('index.ejs', { user: req.user });
     });
   })(req, res, next);
 };
