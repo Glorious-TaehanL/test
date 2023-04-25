@@ -46,9 +46,25 @@ const deletePost = (req, res) => {
   console.log('delete request success');
   console.log(req.body);
   Notice.deleteOne({ id: req.body })
-    .then(function () {
-      console.log('Successfully deleted');
-      res.status(StatusCodes.OK).send({ message: 'Successfully deleted post !!!' });
+    .then(async function () {
+      // console.log('Successfully deleted');
+      // res.status(StatusCodes.OK).send({ message: 'Successfully deleted post !!!' });
+      const totalNotice = await (await Notice.find({}, 'id')).length;
+      const totalNoticePagination = Math.ceil(totalNotice / NOTICE_ROW_COUNT);
+      var pagenum = 1;
+      pageBreadCrumb = breadcrum + '리스트';
+
+      if (typeof req.query.indexnum !== 'undefined') {
+        var items = await Notice.find({})
+          .sort({ id: -1 })
+          .skip(NOTICE_ROW_COUNT * (req.query.indexnum - 1))
+          .limit(NOTICE_ROW_COUNT);
+        pagenum = parseInt(req.query.indexnum);
+      } else {
+        var items = await Notice.find({}).sort({ id: -1 }).limit(NOTICE_ROW_COUNT);
+      }
+
+      res.render('notice-table.ejs', { user: req.user, pageinfo: pageBreadCrumb, items: items, pageindex: { pagenum: pagenum, pagination: totalNoticePagination }, moment });
     })
     .catch(function (error) {
       console.log(error);
