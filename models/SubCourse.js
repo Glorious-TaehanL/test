@@ -1,19 +1,15 @@
 const mongoose = require('mongoose');
 
-const MainCourseSchema = new mongoose.Schema({
+const SubCourseSchema = new mongoose.Schema({
   id: {
     type: Number,
     require: [true, 'Please provide sequence number'],
-  },
-  term: {
-    type: Number,
-    require: [true, 'Please provide sub content term period'],
   },
   title: {
     type: String,
     require: [true, 'Please provide title.'],
   },
-  thumbnail: {
+  maincategory: {
     type: String,
     require: [true, 'Please provide thumbnail image.'],
   },
@@ -21,10 +17,10 @@ const MainCourseSchema = new mongoose.Schema({
     type: String,
     require: [true, 'Please provide Course description.'],
   },
-  createtime: {
-    type: Date,
-    default: Date.now,
+  link: {
+    type: String,
+    require: [true, 'Please provide Course video link.'],
   },
 });
 
-module.exports = mongoose.model('main-courses', MainCourseSchema);
+module.exports = mongoose.model('sub-courses', SubCourseSchema);

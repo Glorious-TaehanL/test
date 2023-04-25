@@ -44,7 +44,7 @@ app.use('/assets', express.static('assets'));
 
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
-app.use('/course', courseRouter);
+app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 
 // app.get('/', (req, res) => res.render('index.ejs'));

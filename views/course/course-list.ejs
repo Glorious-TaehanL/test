@@ -1,71 +1,85 @@
-<!doctype html>
-<html>
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+   <%- include('../header.ejs') %>
+   <!-- Layout wrapper -->
+   <div class="layout-wrapper layout-content-navbar">
+     <div class="layout-container">
+       <!-- Menu -->
+       <%- include('../menu.ejs') %>
+       <!-- /Menu -->
 
-    <script src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"></script>
-    <link rel="stylesheet" href="../public/css/main.css">
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <!-- navigation load -->
-   <%- include('../nav.ejs'); %>
-      <div class="container">
-        <h4>강의코스</h4>
-        <button type="button" class="btn btn-outline-success" onclick="location.href='/course/add'">강의등록</button>
-        <div class="container">
-        <% for(var i = 0 ; i < courses.length ; i++) { %>
-        <div class="card course-<%= i %>" style="width: 18rem;">
-          <div class="image-container" style="width: 270px; height: 180px; background-image: url('/public/images/<%= courses[i].thumbnail %>');"></div>
-            <h5 class="card-title"><%= courses[i].title %></h5>
-            <p class="card-text"><%= courses[i].description %></p>
-            <a href="#" class="btn btn-primary">강의 연결 링크</a>
-          </div>
-          <% } %>
-        </div>
-        </div>
-      </div>
-      <section class="notice">
-        <div class="page-title">
-              <div class="container">
-                  <h3>공지사항</h3>
+       <!-- Layout container -->
+       <div class="layout-page">
+        <!-- Navbar -->
+        <%- include('../navbar.ejs') %>
+        <!-- /Navbar -->
+
+         <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- <div class="container">
+            <h4>강의코스</h4>
+            <div class="container">
+            <% for(var i = 0 ; i < courses.length ; i++) { %>
+            <div class="card course-<%= i %>" style="width: 18rem;">
+              <div class="image-container" style="width: 270px; height: 180px; background-image: url('/public/images/<%= courses[i].thumbnail %>');"></div>
+                <h5 class="card-title"><%= courses[i].title %></h5>
+                <p class="card-text"><%= courses[i].description %></p>
+                <a href="#" class="btn btn-primary">강의 연결 링크</a>
               </div>
-          </div>
-        
-        <!-- board list area -->
-          <div id="board-list">
-              <div class="container">
-                <div class="notice-act-section">
-                </div>
-                  <table class="board-table">
-                      <thead>
-                      <tr>
-                          <th scope="col" class="th-num">번호</th>
-                          <th scope="col" class="th-title">강의명</th>
-                          <th scope="col" class="th-date">등록일</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                        <% for(var i = 0; i < courses.length; i++){ %>
+              <% } %>
+            </div>
+            </div>
+          </div> -->
+          <section class="notice">
+            <div class="page-title">
+                  <div class="container">
+                      <h3>강의 관리</h3>
+                  </div>
+              </div>
+            
+            <!-- board list area -->
+              <div id="board-list">
+                  <div class="container">
+                    <div class="notice-act-section">
+                    </div>
+                      <table class="board-table">
+                          <thead>
                           <tr>
-                              <td><%= courses[i].id %></td>
-                              <th>
-                                <a href="detail/<%= courses[i].id %>"><%= courses[i].title %></a>
-                                <p>테스트</p>
-                              </th>
-                              <td>2017.07.13</td>
+                              <th scope="col" class="th-num">번호</th>
+                              <th scope="col" class="th-title">강의명</th>
+                              <th scope="col" class="th-student">총강의 차수</th>
+                              <th scope="col" class="th-student">수강생</th>
+                              <th scope="col" class="th-date">등록일</th>
                           </tr>
-                      <% } %>
-                      </tbody>
-                  </table>
-                  
+                          </thead>
+                          <tbody>
+                            <% for(var i = 0; i < courses.length; i++){ %>
+                              <tr>
+                                  <td><%= courses[i].id %></td>
+                                  <th>
+                                    <a href="detail/<%= courses[i].id %>"><%= courses[i].title %></a>
+                                    <p>테스트</p>
+                                  </th>
+                                  <td><%= courses[i].term %>강</td>
+                                  <td>5명</td>
+                                  <td>
+                                    <% const date = courses[i].createtime %>
+                                    <%= date.toLocaleDateString('ko-KR') %>
+                                    <%= date.toLocaleTimeString('ko-KR') %>
+                                </td>
+                              </tr>
+                          <% } %>
+                          </tbody>
+                      </table>
+                      
+                  </div>
               </div>
-          </div>
-      </section>
-  </body>
-</html>
+          </section>
+         <!-- Content wrapper -->
+       </div>
+       <!-- / Layout page -->
+     </div>
+
+     <!-- Overlay -->
+     <div class="layout-overlay layout-menu-toggle"></div>
+   </div>
+   <%- include('../footer.ejs') %>

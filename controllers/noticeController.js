@@ -14,6 +14,7 @@ var pageBreadCrumb = '';
  * @param {} title : form data title
  * @param {*} content : form data content
  * @return page : success
+ * @Author : ted
  */
 const addPost = (req, res) => {
   Sequences.findOneAndUpdate({ name: 'notice-number' }, { $inc: { counter: 1 } })
@@ -39,6 +40,7 @@ const addPost = (req, res) => {
  * @brief : delete Post
  *
  * @param {*} id : only provide post id(#Sequence counter) ( not _id )
+ * @Author : ted
  */
 const deletePost = (req, res) => {
   console.log('delete request success');
@@ -58,6 +60,7 @@ const deletePost = (req, res) => {
  * @brief : detail Post
  *
  * @param {*} id : only provide post id(#Sequence counter) ( not _id )
+ * @Author : ted
  */
 const detailPost = (req, res) => {
   Notice.findOne({ id: req.params.id })
@@ -75,6 +78,7 @@ const detailPost = (req, res) => {
  * @param {*} title
  * @param {*} content
  * @return list page.
+ * @Author : ted
  */
 const editPost = (req, res) => {
   pageBreadCrumb = breadcrum + ' 공지사항 추가';
@@ -89,6 +93,7 @@ const editPost = (req, res) => {
  *
  * @param {*} req
  * @param {*} res
+ * @Author : ted
  */
 const displayWritePage = (req, res) => {
   res.render('write.ejs', { user: req.user });
@@ -123,6 +128,7 @@ const displayEditPage = (req, res) => {
  * @param {*} req
  * @return list.ejs file
  * @return_param {Object} total_items
+ * @Author : ted
  * Sort descending
  */
 const displayListPage = async (req, res) => {

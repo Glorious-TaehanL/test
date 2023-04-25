@@ -6,6 +6,16 @@ const StatusCode = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET_KEY = process.env.JWT_KEY;
 
+/**
+ *
+ * @brief login for admin
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next middleware
+ * @Author ted
+ *
+ */
 const login = async (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
     if (authError) {
@@ -25,6 +35,14 @@ const login = async (req, res, next) => {
   })(req, res, next);
 };
 
+/**
+ *
+ * @brief create admin user (not page only post request)
+ *
+ * @param {*} req
+ * @param {*} res
+ * @Author ted
+ */
 const createUser = (req, res) => {
   const { userId, userPw, name } = req.body;
   User.create({ userId: userId, userPw: userPw, name: name })
@@ -34,6 +52,13 @@ const createUser = (req, res) => {
     .catch(function () {});
 };
 
+/**
+ * @brief login after mypage with token.
+ *
+ * @param {*} req
+ * @param {*} res
+ * @Author ted
+ */
 const mypage = (req, res) => {
   if (req.user) {
     console.log(req.user);
