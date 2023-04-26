@@ -25,7 +25,7 @@
             <form action="/course/content/add" method="POST" onsubmit="validateMyForm();">
               <div class="form-group">
                 <label> 강의 분류 </label>
-                <select name="maincourse-list" id="maincourse">
+                <select name="maincourse_category" id="maincourse_category">
                 <!-- Select to main Course list -->
                 <option value="null">강의분류를 선택해주세요.</option>
                 <% for(var i = 0; i < courses.length; i++){ %>
@@ -34,21 +34,21 @@
                 </select>
                 <!-- <input type="text" class="form-control" name="title"> -->
                 <label> 강의 차수 선택 </label>
-                <select id="total-subcourses">
+                <select name="subcourses_indexno" id="subcourses_indexno">
                     <option value="0">0</option>
                   </select>
               </div>
               <div class="form-group">
                 <label>강의 주제</label>
-                <input type="text" class="form-control" name="subcourse-title">
+                <input type="text" class="form-control" name="subcourse_title">
               </div>
               <div class="form-group">
                 <label>강의 영상 링크</label>
-                <input type="url" class="form-control" name="subcourse-link" placeholder="강의영상 URL을 입력해주세요.">
+                <input type="url" class="form-control" name="subcourse_link" placeholder="강의영상 URL을 입력해주세요.">
               </div>
               <div class="form-group">
                 <label>내용</label>
-                <textarea id="summernote"  name="content"></textarea>
+                <textarea id="summernote"  name="note_content"></textarea>
               </div>
               <button type="submit" class="submit-btn btn btn-outline-secondary">Submit</button>
             </form>
@@ -56,8 +56,8 @@
           
           <script>
 
-            const courseSelect = document.getElementById('maincourse');
-            const totalSubcourseSelect = document.getElementById('total-subcourses');
+            const courseSelect = document.getElementById('maincourse_category');
+            const totalSubcourseSelect = document.getElementById('subcourses_indexno');
 
             courseSelect.addEventListener('change', () => {
                 

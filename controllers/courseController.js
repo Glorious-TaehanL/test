@@ -1,5 +1,6 @@
 const MainCourse = require('../models/MainCourse');
 const Sequences = require('../models/Sequence');
+const SubCourse = require('../models/SubCourse');
 
 /**
  * @brief Display to add post page
@@ -43,7 +44,7 @@ const addCourse = (req, res) => {
 /**
  * @brief Display to list course
  *
- * @param {*} req
+ * @param {*} req user information.
  * @param {*} res
  * @return course-list.ejs ,user data and course list
  */
@@ -56,18 +57,59 @@ const listCourse = async (req, res) => {
  * @brief Display to course content list
  *
  */
-const subCourseList = (req, res) => {
-  res.render('course/course-content-list.ejs', { user: req.user });
+const subCourseList = async (req, res) => {
+  const subCourseList = await SubCourse.find({}, { id: 1, indexnumber: 1, title: 1, maincategory: 1 });
+  res.render('course/course-content-list.ejs', { user: req.user, courses: subCourseList });
 };
 
-const subCourseAdd = async (req, res) => {
+/**
+ *
+ * @brief Display to subcourse add get request.
+ *
+ * @param {*} req  user information.
+ * @param {*} res
+ * @return course-content-add.ejs page and main Courselist.
+ *
+ */
+const displaySubCourseAdd = async (req, res) => {
   const mainList = await MainCourse.find({}, { id: 1, title: 1, term: 1 });
   res.render('course/course-content-add.ejs', { user: req.user, courses: mainList });
 };
 
+/**
+ * @brief subcourse add post
+ *
+ * @param {*} req
+ * @param {*} res
+ */
+const subCourseAdd = async (req, res) => {
+  console.log(req.body);
+  Sequences.findOneAndUpdate({ name: 'subcourse-number' }, { $inc: { counter: 1 } })
+    .then(function (result) {
+      const { counter } = result;
+      console.log('successfully update sequence data');
+      SubCourse.create({
+        id: counter,
+        indexnumber: req.body.subcourses_indexno,
+        title: req.body.subcourse_title,
+        maincategory: req.body.maincourse_category,
+        content: req.body.note_content,
+        link: req.body.subcourse_link,
+      })
+        .then(function (result) {
+          console.log(result);
+        })
+        .catch(function (err) {
+          console.log('1' + err);
+        });
+    })
+    .catch(function () {});
+};
+
 module.exports = {
-  displayAddPost,
   addCourse,
+  displayAddPost,
+  displaySubCourseAdd,
   listCourse,
   subCourseList,
   subCourseAdd,
