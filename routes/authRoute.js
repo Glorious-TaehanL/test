@@ -9,7 +9,7 @@ router.get('/logout', isLoggedin, (req, res) => {
   req.logout(() => {
     req.session.destroy();
   });
-  res.redirect('/');
+  res.redirect('/dash');
 });
 
 router.get('/logout', isLoggedin);

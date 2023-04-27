@@ -58,7 +58,7 @@ const listCourse = async (req, res) => {
  *
  */
 const subCourseList = async (req, res) => {
-  const subCourseList = await SubCourse.find({}, { id: 1, indexnumber: 1, title: 1, maincategory: 1 });
+  const subCourseList = await SubCourse.find({}, { id: 1, indexnumber: 1, title: 1, maincategory: 1 }).sort({ id: -1 });
   res.render('course/course-content-list.ejs', { user: req.user, courses: subCourseList });
 };
 
@@ -87,7 +87,7 @@ const subCourseAdd = async (req, res) => {
   Sequences.findOneAndUpdate({ name: 'subcourse-number' }, { $inc: { counter: 1 } })
     .then(function (result) {
       const { counter } = result;
-      console.log('successfully update sequence data');
+      //   console.log('successfully update sequence data');
       SubCourse.create({
         id: counter,
         indexnumber: req.body.subcourses_indexno,
@@ -106,6 +106,25 @@ const subCourseAdd = async (req, res) => {
     .catch(function () {});
 };
 
+/**
+ *
+ * @brief Display to subcourse add get request.
+ *
+ * @param {*} req  user information.
+ * @param {*} res
+ * @return course-content-add.ejs page and main Courselist.
+ *
+ */
+const displaySubCourseEdit = async (req, res) => {
+  // const mainList = await MainCourse.find({}, { id: 1, title: 1, term: 1 });
+  SubCourse.findOne({ id: req.params.id })
+    .then((result) => {
+      console.log(result);
+      res.render('course/course-content-edit.ejs', { user: req.user, subcourse: result });
+    })
+    .catch(() => {});
+};
+
 module.exports = {
   addCourse,
   displayAddPost,
@@ -113,4 +132,5 @@ module.exports = {
   listCourse,
   subCourseList,
   subCourseAdd,
+  displaySubCourseEdit,
 };

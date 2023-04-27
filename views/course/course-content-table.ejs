@@ -12,6 +12,7 @@
               <table class="board-table">
                   <thead>
                   <tr>                      
+                      <th scope="col" class="th-num">번호</th>
                       <th scope="col" class="th-code">강의코드</th>
                       <th scope="col" class="th-num">주차</th>
                       <th scope="col" class="th-title">강의 콘탠츠 제목</th>
@@ -21,15 +22,14 @@
                   <tbody>
                     <% for(var i = 0; i < courses.length; i++){ %>
                         <tr class="trow">
-                            
-                            <th>
-                                <%- String(courses[i].maincategory ).padStart(5, '0') %>
-                                <!-- <%= courses[i].maincategory %> -->
-                            </th>
+                            <td><%= courses[i].id %></td>
+                            <td>
+                                <%- String(courses[i].maincategory).padStart(5, '0') %>
+                            </td>
                             <td><%= courses[i].indexnumber %> 주차</td>
                             <td><%= courses[i].title %></td>
                             <td>
-                               관리탭
+                               <button class="btn btn-light" onclick="location.href='edit/<%= courses[i].id %>'"  >관리</button>
                             </td>
                         </tr>
                     <% } %>

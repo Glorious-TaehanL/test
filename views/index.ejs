@@ -26,7 +26,7 @@
                         <div class="card-body">
                           <h5 class="card-title text-primary">LMS Management system 입니다. 🎉</h5>
                           <p class="mb-4">
-                            강의는 <span class="fw-bold">미완)3</span>종류가 있으며, 총강의는 미완)20개입니다.</p>
+                            강의는 <span class="fw-bold"><%= reportData.mainCourse %></span>종류가 있으며, 총강의는 미완)20개입니다.</p>
 
                           <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
                         </div>
@@ -76,8 +76,8 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">공지사항</span>
-                          <h3 class="card-title mb-2">미완)10개</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +2개</small>
+                          <h3 class="card-title mb-2"><%= reportData.notice %>개</h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> 미완)+2개</small>
                         </div>
                       </div>
                     </div>
@@ -110,8 +110,8 @@
                             </div>
                           </div>
                           <span>강의 종류</span>
-                          <h3 class="card-title text-nowrap mb-1">미완)3개</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +1개</small>
+                          <h3 class="card-title text-nowrap mb-1"><%= reportData.mainCourse %>개</h3>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> 미완)+1개</small>
                         </div>
                       </div>
                     </div>
@@ -202,8 +202,8 @@
                             </div>
                           </div>
                           <span class="d-block mb-1">강의 결제</span>
-                          <h3 class="card-title text-nowrap mb-2">2,340,000원</h3>
-                          <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> +200,000 </small>
+                          <h3 class="card-title text-nowrap mb-2">미완)40,000원</h3>
+                          <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>미완) +200,000 </small>
                         </div>
                       </div>
                     </div>
@@ -233,7 +233,7 @@
                           </div>
                           <span class="fw-semibold d-block mb-1">총 수강생</span>
                           <h3 class="card-title mb-2">미완)120명</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +12명</small>
+                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>미완) +12명</small>
                         </div>
                       </div>
                     </div>

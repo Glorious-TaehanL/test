@@ -13,12 +13,12 @@ const app = express();
 passportConfig();
 const port = process.env.PORT;
 
+// Router init.
 const adminRouter = require('./routes/adminRoute');
 const authRouter = require('./routes/authRoute');
 const courseRouter = require('./routes/courseRoute');
 const noticeRouter = require('./routes/noticeRoute');
-
-const Notice = require('./models/Notice');
+const reportRouter = require('./routes/reportRoute');
 
 app.use(
   session({
@@ -47,8 +47,7 @@ app.use('/auth', authRouter);
 app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 
-// app.get('/', (req, res) => res.render('index.ejs'));
-app.get('/', isLoggedin, (req, res) => res.render('index', { user: req.user }));
+app.get('/', isLoggedin, reportRouter);
 
 const start = async () => {
   try {

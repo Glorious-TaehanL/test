@@ -190,3 +190,21 @@ table {
   .content-wrapper{
     justify-content: unset;
   }
+  #player{
+    color: darkgray;
+      max-width: 525px;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+  }
+
+#player iframe{
+    width: 100%;
+    position: absolute;
+}
+#player svg{
+    width: 100%;
+}
