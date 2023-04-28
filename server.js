@@ -19,12 +19,18 @@ const authRouter = require('./routes/authRoute');
 const courseRouter = require('./routes/courseRoute');
 const noticeRouter = require('./routes/noticeRoute');
 const reportRouter = require('./routes/reportRoute');
+const apiRouter = require('./routes/apiRoute');
+
+//swagger
+const { swaggerUi, specs } = require('./swagger/swagger');
+
+const secret = process.env.SESSION_KEY || '';
 
 app.use(
   session({
-    secret: '비밀코드',
-    resave: true,
-    saveUninitialized: false,
+    secret: secret,
+    resave: false,
+    saveUninitialized: true,
     cookie: {
       httpOnly: true,
       secure: false,
@@ -46,6 +52,10 @@ app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
+
+//swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use('/api/v1', apiRouter);
 
 app.get('/', isLoggedin, reportRouter);
 

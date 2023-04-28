@@ -21,26 +21,29 @@
           <div class="container mt-3">
             <form action="/course/content/add" method="POST" onsubmit="validateMyForm();">
                 <div class="container">
+                    <div class="alert alert-warning" role="alert">
+                        * 한번 설정된 강의분류와 강의주차는 수정되지않으니, 정확하게 입력해주세요.
+                      </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label> 강의 분류 </label>
-                                <select name="maincourse_category" id="maincourse_category">
-                                <!-- Select to main Course list -->
-                                <option value="null">강의분류를 선택해주세요.</option>
-                                <% for(var i = 0; i < courses.length; i++){ %>
-                                    <option value="<%= courses[i].id %>" data-max="<%= courses[i].term %>"><%= courses[i].title %></option>
+                                <select name="maincourse_category" id="maincourse_category" required>
+                                    <!-- Select to main Course list -->
+                                    <option value="">강의분류를 선택해주세요.</option>
+                                    <% for(var i = 0; i < courses.length; i++){ %>
+                                        <option value="<%= courses[i].id %>" data-max="<%= courses[i].term %>"><%= courses[i].title %></option>
                                     <% } %>
                                 </select>
                                 <!-- <input type="text" class="form-control" name="title"> -->
                                 <label> 강의 차수 선택 </label>
-                                <select name="subcourses_indexno" id="subcourses_indexno">
-                                    <option value="0">0</option>
+                                <select name="subcourses_indexno" id="subcourses_indexno" required>
+                                    <option value="">-주차</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>강의 주제</label>
-                                <input type="text" class="form-control" name="subcourse_title">
+                                <input type="text" class="form-control" name="subcourse_title" required>
                             </div>
                             <div class="form-group">
                                 <div>비디오 분류</div>
@@ -55,7 +58,7 @@
                             </div>
                             <div class="form-group">
                                 <label>강의 영상 링크</label>
-                                <input type="url" id="subcourse_link" class="form-control" name="subcourse_link" placeholder="강의영상 URL을 입력해주세요." onchange="printVideo()">
+                                <input type="url" id="subcourse_link" class="form-control" name="subcourse_link" placeholder="강의영상 URL을 입력해주세요." onchange="printVideo()" required>
                             </div>
                             <div class="alert alert-danger" role="alert" style="display: none;">
                                 강의분류와 영상 링크가 일치하는지 확인해주세요.
@@ -78,18 +81,8 @@
           <script src="https://www.youtube.com/iframe_api"></script>
           <script src="https://player.vimeo.com/api/player.js"></script>
           <script src="/assets/js/video.js"></script>
+          <script src="/assets/js/summernote.js"></script>
           <script>
-              function handleChange(event){
-                const urlInput = document.getElementById('subcourse_link');
-                const urlStr = urlInput.value.toString();
-                const videoOption = event.target.value;
-
-                if(urlInput.value)
-                {
-                    urlInput.value = "";
-                    initVideoPlayer();
-                }
-              }
 
             const courseSelect = document.getElementById('maincourse_category');
             const totalSubcourseSelect = document.getElementById('subcourses_indexno');
@@ -100,51 +93,13 @@
                 const lessonsCount = optionElement.getAttribute('data-max');
                 totalSubcourseSelect.innerHTML = '';
 
-                for (let i = 0; i <= lessonsCount; i++) {
+                for (let i = 1; i <= lessonsCount; i++) {
                     const option = document.createElement('option');
                     option.value = i;
                     option.textContent = i;
                     totalSubcourseSelect.appendChild(option);
                 }
             });
-
-            $('#summernote').summernote({
-              placeholder: '',
-              tabsize: 2,
-               // 에디터 높이
-              height: 250,
-              // 에디터 한글 설정
-              lang: "ko-KR",
-              // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
-              focus : true,
-              toolbar: [
-                  // 글꼴 설정
-                  ['fontname', ['fontname']],
-                  // 글자 크기 설정
-                  ['fontsize', ['fontsize']],
-                  // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-                  ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-                  // 글자색
-                  ['color', ['forecolor','color']],
-                  // 표만들기
-                  ['table', ['table']],
-                  // 글머리 기호, 번호매기기, 문단정렬
-                  ['para', ['ul', 'ol', 'paragraph']],
-                  // 줄간격
-                  ['height', ['height']],
-                  // 링크첨부
-                  ['insert',['link']],
-                ],
-              // 추가한 폰트사이즈
-              fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-            });
-
-            function validateMyForm()
-            {
-              $('textarea[name="content"]').html($('.summernote').code());
-              alert("validations passed");
-              return true;
-            }
           </script>
 
            </div>

@@ -117,12 +117,21 @@ const subCourseAdd = async (req, res) => {
  */
 const displaySubCourseEdit = async (req, res) => {
   // const mainList = await MainCourse.find({}, { id: 1, title: 1, term: 1 });
-  SubCourse.findOne({ id: req.params.id })
+  var videoYoutubeVendor = false;
+  var result;
+
+  const subCourse = await SubCourse.findOne({ id: req.params.id })
     .then((result) => {
-      console.log(result);
-      res.render('course/course-content-edit.ejs', { user: req.user, subcourse: result });
+      if (result.link.includes('youtu')) {
+        videoYoutubeVendor = true;
+      }
+      return result;
     })
     .catch(() => {});
+
+  const mainCourseTitle = await MainCourse.findOne({ id: subCourse.maincategory }, { title: 1 });
+
+  res.render('course/course-content-edit.ejs', { user: req.user, subcourse: { sub: subCourse, main: mainCourseTitle.title }, youtubeCheck: videoYoutubeVendor });
 };
 
 module.exports = {

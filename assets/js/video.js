@@ -1,6 +1,18 @@
 // const Vimeo = require('@vimeo/player'); //for vimeo
 var player; // for youtube player
 
+function handleChange(event) {
+  console.log('hasChange');
+  const urlInput = document.getElementById('subcourse_link');
+  const urlStr = urlInput.value.toString();
+  const videoOption = event.target.value;
+
+  if (urlInput.value) {
+    urlInput.value = '';
+    initVideoPlayer();
+  }
+}
+
 function printVideo() {
   // video example url
   // https://youtu.be/K5J88rudNeY
@@ -21,6 +33,7 @@ function printVideo() {
 }
 
 function validationVideoVendor(videoOption, urlStr) {
+  const urlInput = document.getElementById('subcourse_link');
   if (videoOption == 'youtube') {
     // select youtube
     if (urlStr.indexOf('youtu') !== -1) {
@@ -33,9 +46,10 @@ function validationVideoVendor(videoOption, urlStr) {
       initVideoPlayer();
       playYoutubePlayer(videoYoutubeId);
     } else {
-      $('.alert').toggle();
+      $('.alert-danger').toggle();
       setTimeout(() => {
-        $('.alert').toggle();
+        $('.alert-danger').toggle();
+        urlInput.value = '';
       }, 3000);
     }
   } else {
@@ -48,9 +62,10 @@ function validationVideoVendor(videoOption, urlStr) {
       initVideoPlayer();
       const player = new Vimeo.Player('player', options);
     } else {
-      $('.alert').toggle();
+      $('.alert-danger').toggle();
       setTimeout(() => {
-        $('.alert').toggle();
+        $('.alert-danger').toggle();
+        urlInput.value = '';
       }, 3000);
     }
 
