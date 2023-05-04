@@ -2,8 +2,8 @@
  * @swagger
  * components:
  *  schemas:
- *    RegisterCustomerRequest:
- *      title: RegisterCustomerRequest
+ *    CustomerRequest:
+ *      title: Customer Models
  *      required:
  *       - id
  *       - name
