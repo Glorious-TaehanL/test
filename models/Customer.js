@@ -62,7 +62,10 @@ CustomerSchema.methods.createJWT = function () {
 };
 
 CustomerSchema.methods.comparePassword = async function (canditatePassword) {
+  console.log('candi::' + canditatePassword);
+  console.log('this::' + this.password);
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
+  console.log('isMatch::' + isMatch);
   return isMatch;
 };
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, loginCustomer, getNoticeList } = require('../controllers/apiController');
+const { registerCustomer, loginCustomer } = require('../controllers/apiController');
 const router = express.Router();
 
 /**
@@ -30,7 +30,7 @@ const router = express.Router();
  *       description: 'Error to updated'
  *       headers: {}
  */
-router.post('/customer/register', registerCustomer);
+router.post('/register', registerCustomer);
 
 /**
  * @swagger
@@ -58,31 +58,6 @@ router.post('/customer/register', registerCustomer);
  *       description: 'Error to login'
  *       headers: {}
  */
-router.post('/customer/login', loginCustomer);
-
-/**
- * @swagger
- * paths:
- *  /notice/list/{id}:
- *   get:
- *    tags: [Notice]
- *    summary: Notice List
- *    operationId: NoticeList
- *    parameters:
- *       - in: path
- *         name: id
- *         schema:
- *         type: number
- *         required: true
- *         description: The page ID
- *    responses:
- *     '200':
- *       description: 'Successfully get notice list'
- *       headers: {}
- *     '400':
- *       description: 'Error to get notice list'
- *       headers: {}
- */
-router.get('/notice/list/:id', getNoticeList);
+router.post('/login', loginCustomer);
 
 module.exports = router;

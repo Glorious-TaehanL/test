@@ -1,6 +1,7 @@
 const Customer = require('../models/Customer');
 const Notice = require('../models/Notice');
 const { StatusCodes } = require('http-status-codes');
+const { BadRequestError, UnauthenticatedError } = require('../errors');
 const NOTICE_ROW_COUNT = 12;
 
 const registerCustomer = async (req, res) => {
@@ -29,6 +30,7 @@ const loginCustomer = async (req, res) => {
   }
   // compare password
   const token = user.createJWT();
+  console.log(token);
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 };
 
