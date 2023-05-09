@@ -27,7 +27,7 @@ const addCourse = (req, res) => {
   Sequences.findOneAndUpdate({ name: 'maincourse-number' }, { $inc: { counter: 1 } })
     .then(function (result) {
       const { counter } = result;
-      MainCourse.create({ id: counter, title: req.body.course_title, term: req.body.course_term, thumbnail: req.file.filename, description: req.body.course_description })
+      MainCourse.create({ id: counter, price: req.body.course_price, title: req.body.course_title, term: req.body.course_term, thumbnail: req.file.filename, description: req.body.course_description })
         .then(function () {
           console.log('successfully main course updated');
         })
@@ -37,6 +37,35 @@ const addCourse = (req, res) => {
         });
     })
     .catch(function (err) {
+      console.log(err);
+    });
+};
+
+const detailCourse = async (req, res) => {
+  const { id } = req.params;
+  const maincourse = await MainCourse.find({ id: req.params.id }).then((result) => {
+    return result;
+  });
+  console.log(req.params.id);
+  res.render('course/course-detail.ejs', { user: req.user, course: maincourse });
+};
+
+const updateDetailCourse = async (req, res) => {
+  console.log(req.body.id);
+  var imgName;
+  if (req.file) {
+    imgName = req.file.filename;
+  } else {
+    imgName = req.body.thumbnail;
+  }
+  //   const thumbnailimgname =
+  MainCourse.findOneAndUpdate(
+    { id: parseInt(req.body.id) },
+    { price: req.body.course_price, title: req.body.course_title, term: req.body.term, thumbnail: imgName, description: req.body.description },
+    {}
+  )
+    .then((doc) => {})
+    .catch((err) => {
       console.log(err);
     });
 };
@@ -87,7 +116,7 @@ const subCourseAdd = async (req, res) => {
   Sequences.findOneAndUpdate({ name: 'subcourse-number' }, { $inc: { counter: 1 } })
     .then(function (result) {
       const { counter } = result;
-      //   console.log('successfully update sequence data');
+
       SubCourse.create({
         id: counter,
         indexnumber: req.body.subcourses_indexno,
@@ -136,6 +165,8 @@ const displaySubCourseEdit = async (req, res) => {
 
 module.exports = {
   addCourse,
+  detailCourse,
+  updateDetailCourse,
   displayAddPost,
   displaySubCourseAdd,
   listCourse,
