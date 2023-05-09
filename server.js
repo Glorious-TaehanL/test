@@ -51,11 +51,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.json());
-
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(express.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static('public'));
 app.use('/assets', express.static('assets'));
@@ -68,7 +67,8 @@ app.use('/notice', isLoggedin, noticeRouter);
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api/v1/customer', customerApiRouter);
-app.use('/api/v1/jobs', authenticateUser, jobsApiRouter);
+// app.use('/api/v1/jobs', authenticateUser, jobsApiRouter);
+app.use('/api/v1/jobs', jobsApiRouter);
 
 app.get('/', isLoggedin, reportRouter);
 

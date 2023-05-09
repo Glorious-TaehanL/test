@@ -5,6 +5,10 @@ const MainCourseSchema = new mongoose.Schema({
     type: Number,
     require: [true, 'Please provide sequence number'],
   },
+  price: {
+    type: Number,
+    require: [true, 'Please provide course price'],
+  },
   term: {
     type: Number,
     require: [true, 'Please provide sub content term period'],
