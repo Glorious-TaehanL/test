@@ -6,18 +6,23 @@
  *      title: Customer Models
  *      required:
  *       - id
+ *       - num
  *       - name
  *       - email
  *       - password
  *      properties:
  *        id:
  *         type: string
+ *        num:
+ *         type: number
  *        name:
  *         type: string
  *        email:
  *         type: string
  *        password:
  *         type: string
+ *        phonenumber:
+ *         type: number
  */
 
 const mongoose = require('mongoose');
@@ -30,6 +35,10 @@ const CustomerSchema = new mongoose.Schema({
     required: [true, 'Please provide id'],
     maxlength: 50,
     minlength: 3,
+  },
+  num: {
+    type: Number,
+    require: [true, 'Please provide sequence number'],
   },
   name: {
     type: String,
@@ -47,6 +56,10 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide password'],
     minlength: [8, 'Your password must be a t leeast 8 characters long'],
+  },
+  phonenumber: {
+    type: Number,
+    required: [true, 'Please provide phone number'],
   },
 });
 

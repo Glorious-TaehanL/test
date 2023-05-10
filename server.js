@@ -26,6 +26,7 @@ const authenticateUser = require('./middleware/authenticationUser');
 const adminRouter = require('./routes/adminRoute');
 const authRouter = require('./routes/authRoute');
 const courseRouter = require('./routes/courseRoute');
+const customerRouter = require('./routes/customerRoute');
 const noticeRouter = require('./routes/noticeRoute');
 const reportRouter = require('./routes/reportRoute');
 const customerApiRouter = require('./routes/customerApiRoute');
@@ -63,6 +64,7 @@ app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
+app.use('/customer', isLoggedin, customerRouter);
 
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

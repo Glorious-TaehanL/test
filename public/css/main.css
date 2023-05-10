@@ -126,6 +126,26 @@ table {
     text-align: center;
   }
   
+  .board-table .th-id{
+    width: 20%;
+    text-align: center;
+  }
+  
+  .board-table .th-name{
+    width: 15%;
+    text-align: center;
+  }
+
+  .board-table .th-email{
+    width: 30%;
+    text-align: center;
+  }
+
+  .board-table .th-contact{
+    width: 25%;
+    text-align: center;
+  }
+
   .board-table .th-date {
     width: 20%;
   }

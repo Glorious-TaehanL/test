@@ -1,6 +1,7 @@
 const MainCourse = require('../models/MainCourse');
 const Sequences = require('../models/Sequence');
 const SubCourse = require('../models/SubCourse');
+const StatusCodes = require('http-status-codes');
 
 /**
  * @brief Display to add post page
@@ -51,7 +52,6 @@ const detailCourse = async (req, res) => {
 };
 
 const updateDetailCourse = async (req, res) => {
-  console.log(req.body.id);
   var imgName;
   if (req.file) {
     imgName = req.file.filename;
@@ -59,12 +59,15 @@ const updateDetailCourse = async (req, res) => {
     imgName = req.body.thumbnail;
   }
   //   const thumbnailimgname =
+
   MainCourse.findOneAndUpdate(
     { id: parseInt(req.body.id) },
-    { price: req.body.course_price, title: req.body.course_title, term: req.body.term, thumbnail: imgName, description: req.body.description },
+    { price: req.body.course_price, title: req.body.course_title, term: req.body.course_term, thumbnail: imgName, description: req.body.course_description },
     {}
   )
-    .then((doc) => {})
+    .then((doc) => {
+      res.status(StatusCodes.OK).redirect('/course');
+    })
     .catch((err) => {
       console.log(err);
     });

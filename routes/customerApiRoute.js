@@ -19,6 +19,7 @@ const router = express.Router();
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
  *              id: bobid
+ *              num: 40
  *              name: bob
  *              email: bob@gmail.com
  *              password: secret
