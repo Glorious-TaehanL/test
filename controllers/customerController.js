@@ -1,7 +1,8 @@
 const Customer = require('../models/Customer');
 
 const getCustomerList = async (req, res) => {
-  res.render('customer/customer-list.ejs', { user: req.user });
+  const customerlist = await Customer.find({});
+  res.render('customer/customer-list.ejs', { user: req.user, customers: customerlist });
 };
 
 module.exports = {

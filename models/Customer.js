@@ -35,6 +35,7 @@ const CustomerSchema = new mongoose.Schema({
     required: [true, 'Please provide id'],
     maxlength: 50,
     minlength: 3,
+    unique: true,
   },
   num: {
     type: Number,
@@ -58,7 +59,7 @@ const CustomerSchema = new mongoose.Schema({
     minlength: [8, 'Your password must be a t leeast 8 characters long'],
   },
   phonenumber: {
-    type: Number,
+    type: String,
     required: [true, 'Please provide phone number'],
   },
 });

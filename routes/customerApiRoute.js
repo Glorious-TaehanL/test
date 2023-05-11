@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, loginCustomer } = require('../controllers/customerApiController');
+const { registerCustomer, loginCustomer, findCustomer } = require('../controllers/customerApiController');
 const router = express.Router();
 
 /**
@@ -19,10 +19,11 @@ const router = express.Router();
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
  *              id: bobid
- *              num: 40
+ *              num: 40 //auto increment
  *              name: bob
  *              email: bob@gmail.com
  *              password: secret
+ *              phonenumber: 01012341234
  *    responses:
  *     '200':
  *       description: 'Successfully updated'
@@ -60,5 +61,32 @@ router.post('/register', registerCustomer);
  *       headers: {}
  */
 router.post('/login', loginCustomer);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/findEmail:
+ *   post:
+ *    tags: [Customer]
+ *    summary: Customer find Email
+ *    operationId: FindCustomer
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              name: bob
+ *    responses:
+ *     '200':
+ *       description: 'Successfully find customer email'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to login'
+ *       headers: {}
+ */
+router.post('/findEmail', findCustomer);
 
 module.exports = router;
