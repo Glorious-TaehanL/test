@@ -14,9 +14,9 @@ const { BadRequestError, UnauthenticatedError } = require('../errors');
  * @return token and user name.
  */
 const registerCustomer = async (req, res) => {
-  const { id, name, email, password, phonenumber } = req.body;
+  const { name, email, password, phonenumber } = req.body;
 
-  if (!id || !name || !email || !password || !phonenumber) {
+  if (!name || !email || !password || !phonenumber) {
     throw new CustomError.BadRequestError('입력한 회원정보를 확인해주세요.');
   }
 
@@ -29,7 +29,7 @@ const registerCustomer = async (req, res) => {
     .then((result) => {
       const { counter } = result;
 
-      Customer.create({ num: counter, id, name, email, password, phonenumber }).then((customer) => {
+      Customer.create({ num: counter, name, email, password, phonenumber }).then((customer) => {
         const token = customer.createJWT();
         res.status(StatusCodes.CREATED).json({ customer: { name: customer.name }, token });
       });

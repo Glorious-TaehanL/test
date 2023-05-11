@@ -18,7 +18,6 @@ const router = express.Router();
  *          schema:
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
- *              id: bobid
  *              num: 40 //auto increment
  *              name: bob
  *              email: bob@gmail.com
