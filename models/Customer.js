@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 /**
  * @swagger
  * components:
@@ -24,10 +27,6 @@
  *        phonenumber:
  *         type: number
  */
-
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const CustomerSchema = new mongoose.Schema({
   id: {

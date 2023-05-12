@@ -1,0 +1,62 @@
+
+   <%- include('./header.ejs') %>
+   <!-- Layout wrapper -->
+   <div class="layout-wrapper layout-content-navbar">
+     <div class="layout-container">
+       <!-- Menu -->
+       <%- include('./menu.ejs') %>
+       <!-- /Menu -->
+
+       <!-- Layout container -->
+       <div class="layout-page">
+        <!-- Navbar -->
+        <%- include('./navbar.ejs') %>
+        <!-- /Navbar -->
+
+         <!-- Content wrapper -->
+        <div class="content-wrapper">
+            <div class="container">
+                <h4>환경 설정</h4>
+                <form method="POST" action="/course/add" enctype="multipart/form-data">
+                    <div class="container course-preview">
+                        <label>로고 이미지 등록</label>
+                        <label class="btn btn-outline-secondary" for="thumnail_course">
+                            업로드
+                        </label>
+                        <p>최대 이미지 크기 : 2MB</p>
+                        <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; background: no-repeat; background-size: contain; 	background-position: center center;">
+                            <i class="far fa-image img-placeholder"></i>
+                        </div>
+                        <input id="thumnail_course" name="thumnail_course" type="file" onchange="setThumbnail(event)" style="display:none;" />
+                    </div>
+        
+                    <div class="container course-information">
+                      <p>학원 이름</p>
+                      <input id="company_name" name="company_name" type="text" size="60" />
+                      <p>학원 연락처</p>
+                      <input id="company_tel" name="company_tel" type="text" size="60" />
+                      <p>학원 설명</p>
+                      <textarea name="company_information" cols="100" rows="10"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-outline-secondary">Submit</button>
+                </form>
+              </div>
+              <script>
+                function setThumbnail(event){
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        document.getElementById("logo_img_container").style.backgroundImage= `url(${event.target.result})`;
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            </script>
+         <!-- Content wrapper -->
+       </div>
+       <!-- / Layout page -->
+     </div>
+
+     <!-- Overlay -->
+     <div class="layout-overlay layout-menu-toggle"></div>
+   </div>
+   <%- include('./footer.ejs') %>

@@ -31,6 +31,7 @@ const noticeRouter = require('./routes/noticeRoute');
 const reportRouter = require('./routes/reportRoute');
 const customerApiRouter = require('./routes/customerApiRoute');
 const jobsApiRouter = require('./routes/jobsApiRoute');
+const settingsRouter = require('./routes/settingsRoute');
 
 //swagger
 const { swaggerUi, specs } = require('./swagger/swagger');
@@ -60,11 +61,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static('public'));
 app.use('/assets', express.static('assets'));
 
+//Routers
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 app.use('/customer', isLoggedin, customerRouter);
+app.use('/settings', settingsRouter);
 
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
