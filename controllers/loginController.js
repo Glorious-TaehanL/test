@@ -3,8 +3,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const StatusCode = require('http-status-codes');
-const jwt = require('jsonwebtoken');
-const JWT_SECRET_KEY = process.env.JWT_KEY;
 
 /**
  *

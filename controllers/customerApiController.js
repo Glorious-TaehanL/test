@@ -20,9 +20,9 @@ const registerCustomer = async (req, res) => {
     throw new CustomError.BadRequestError('입력한 회원정보를 확인해주세요.');
   }
 
-  const eqcustomer = await Customer.findOne({ $or: [{ email: email }, { id: id }] });
+  const eqcustomer = await Customer.findOne({ $or: [{ email: email }] });
   if (eqcustomer) {
-    throw new CustomError.BadRequestError('이미 같은 아이디또는 이메일을 갖고있는 수강생이 있습니다.');
+    throw new CustomError.BadRequestError('이미 같은 이메일을 갖고있는 수강생이 있습니다.');
   }
 
   Sequences.findOneAndUpdate({ name: 'customer-number' }, { $inc: { counter: 1 } })

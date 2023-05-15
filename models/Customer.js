@@ -8,14 +8,11 @@ const jwt = require('jsonwebtoken');
  *    CustomerRequest:
  *      title: Customer Models
  *      required:
- *       - id
  *       - num
  *       - name
  *       - email
  *       - password
  *      properties:
- *        id:
- *         type: string
  *        num:
  *         type: number
  *        name:
@@ -29,13 +26,6 @@ const jwt = require('jsonwebtoken');
  */
 
 const CustomerSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: [true, 'Please provide id'],
-    maxlength: 50,
-    minlength: 3,
-    unique: true,
-  },
   num: {
     type: Number,
     require: [true, 'Please provide sequence number'],
@@ -69,7 +59,7 @@ CustomerSchema.pre('save', async function () {
 });
 
 CustomerSchema.methods.createJWT = function () {
-  return jwt.sign({ id: this.id, name: this.name }, process.env.JWT_FRONT_KEY, {
+  return jwt.sign({ email: this.email, name: this.name }, process.env.JWT_FRONT_KEY, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
