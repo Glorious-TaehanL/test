@@ -29,10 +29,14 @@ const registerCustomer = async (req, res) => {
     .then((result) => {
       const { counter } = result;
 
-      Customer.create({ num: counter, name, email, password, phonenumber }).then((customer) => {
-        const token = customer.createJWT();
-        res.status(StatusCodes.CREATED).json({ customer: { name: customer.name }, token });
-      });
+      Customer.create({ num: counter, name, email, password, phonenumber })
+        .then((customer) => {
+          const token = customer.createJWT();
+          res.status(StatusCodes.CREATED).json({ customer: { name: customer.name }, token });
+        })
+        .catch((err) => {
+          res.status(StatusCodes.BAD_REQUEST).json({ msg: `${err}` });
+        });
     })
     .catch((err) => {
       throw new CustomError.NotFoundError(`customer-number 시퀀스 데이터가 없습니다.`);
