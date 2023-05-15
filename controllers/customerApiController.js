@@ -82,8 +82,14 @@ const findCustomer = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: { email: findCustomerObj.email } });
 };
 
+const getList = async (req, res) => {
+  const list = await Customer.find({}).sort({ num: -1 });
+  res.status(StatusCodes.OK).json({ list: list });
+};
+
 module.exports = {
   registerCustomer,
   loginCustomer,
   findCustomer,
+  getList,
 };

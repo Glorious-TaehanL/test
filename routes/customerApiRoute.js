@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, loginCustomer, findCustomer } = require('../controllers/customerApiController');
+const { registerCustomer, loginCustomer, findCustomer, getList } = require('../controllers/customerApiController');
 const router = express.Router();
 
 /**
@@ -87,5 +87,32 @@ router.post('/login', loginCustomer);
  *       headers: {}
  */
 router.post('/findEmail', findCustomer);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/getlist:
+ *   get:
+ *    tags: [Customer]
+ *    summary: Customer get list
+ *    operationId: get Customer list
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              name: bob
+ *    responses:
+ *     '200':
+ *       description: 'Successfully find customer get list'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get list'
+ *       headers: {}
+ */
+router.post('/getlist', getList);
 
 module.exports = router;
