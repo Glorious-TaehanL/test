@@ -17,26 +17,26 @@
         <div class="content-wrapper">
             <div class="container">
                 <h4>환경 설정</h4>
-                <form method="POST" action="/course/add" enctype="multipart/form-data">
+                <form method="POST" action="/settings/updateconfig" enctype="multipart/form-data">
                     <div class="container course-preview">
                         <label>로고 이미지 등록</label>
-                        <label class="btn btn-outline-secondary" for="thumnail_course">
+                        <label class="btn btn-outline-secondary" for="logo-img">
                             업로드
                         </label>
                         <p>최대 이미지 크기 : 2MB</p>
                         <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; background: no-repeat; background-size: contain; 	background-position: center center;">
-                            <i class="far fa-image img-placeholder"></i>
+                            <i class="far fa-image" id="img-placeholder"></i>
                         </div>
-                        <input id="thumnail_course" name="thumnail_course" type="file" onchange="setThumbnail(event)" style="display:none;" />
+                        <input id="logo-img" name="logo-img" type="file" onchange="setThumbnail(event)" style="display:none;" />
                     </div>
         
                     <div class="container course-information">
                       <p>학원 이름</p>
-                      <input id="company_name" name="company_name" type="text" size="60" />
+                      <input id="company_name" name="company_name" type="text" size="60" <% if(config){ %> value="<%= setting.companyname %>" <% } %> />
                       <p>학원 연락처</p>
-                      <input id="company_tel" name="company_tel" type="text" size="60" />
+                      <input id="company_tel" name="company_tel" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  <% if(config){ %> value="<%= setting.companycontact %>" <% } %> />
                       <p>학원 설명</p>
-                      <textarea name="company_information" cols="100" rows="10"></textarea>
+                      <textarea name="company_information" cols="100" rows="10"> <% if(config){ %> <%= setting.companyinfo %> <% } %></textarea>
                     </div>
                     
                     <button type="submit" class="btn btn-outline-secondary">Submit</button>
@@ -45,7 +45,10 @@
               <script>
                 function setThumbnail(event){
                     var reader = new FileReader();
+                    var placeimg = document.getElementById("img-placeholder");
                     reader.onload = function(event) {
+                        if(placeimg.id.indexOf("none") === -1)
+                            placeimg.setAttribute("id","none");
                         document.getElementById("logo_img_container").style.backgroundImage= `url(${event.target.result})`;
                     };
                     reader.readAsDataURL(event.target.files[0]);
