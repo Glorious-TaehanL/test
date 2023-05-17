@@ -24,8 +24,15 @@
                             업로드
                         </label>
                         <p>최대 이미지 크기 : 2MB</p>
-                        <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; background: no-repeat; background-size: contain; 	background-position: center center;">
+                        <% if(config) { %>
+                        <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; 
+                                                            background: no-repeat;
+                                                            background-size: contain; 	
+                                                            background-position: center center;
+                                                            background-image: url('/public/images/<%= setting.logo %>');">
+                        <% }else{ %>
                             <i class="far fa-image" id="img-placeholder"></i>
+                        <% } %>
                         </div>
                         <input id="logo-img" name="logo-img" type="file" onchange="setThumbnail(event)" style="display:none;" />
                     </div>

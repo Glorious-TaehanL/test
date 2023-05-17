@@ -14,6 +14,12 @@ const session = require('express-session');
 const app = express();
 passportConfig();
 const port = process.env.PORT;
+const cors = require('cors');
+
+let corsOptions = {
+  origin: 'https://www.localhost',
+  credentials: true,
+};
 
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
@@ -56,6 +62,7 @@ app.use(passport.session());
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(express.json());
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static('public'));
