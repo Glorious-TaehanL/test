@@ -1,5 +1,6 @@
 const express = require('express');
-const { getNoticeList, getMainCourse, getSubCourse } = require('../controllers/jobsApiController');
+const { getNoticeList, getMainCourse, getAccessMainCourse, getSubCourse } = require('../controllers/jobsApiController');
+const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 /**
  * @swagger
@@ -43,6 +44,24 @@ router.get('/notice/list/:id', getNoticeList);
  *       headers: {}
  */
 router.get('/maincourse/list', getMainCourse);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/maincourse/access/list:
+ *   get:
+ *    tags: [Jobs]
+ *    summary: Get Access Main Course id list
+ *    operationId: AccessMcourseList
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get access main course id list'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get access main course list'
+ *       headers: {}
+ */
+router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
 
 /**
  * @swagger

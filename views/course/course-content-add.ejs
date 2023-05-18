@@ -57,6 +57,12 @@
                                 </label>
                             </div>
                             <div class="form-group">
+                                <div class="form-check form-switch ps-0">
+                                    <input class="form-check-input ms-0" type="checkbox" role="switch" id="sampling_value" value="false" name="sampling_value" onchange="checkSampling()">
+                                    <label class="form-check-label ps-5" for="sampling_value">맛보기 영상 설정</label>
+                                  </div>
+                            </div>
+                            <div class="form-group">
                                 <label>강의 영상 링크</label>
                                 <input type="url" id="subcourse_link" class="form-control" name="subcourse_link" placeholder="강의영상 URL을 입력해주세요." onchange="printVideo()" required>
                             </div>
@@ -82,6 +88,7 @@
           <script src="https://player.vimeo.com/api/player.js"></script>
           <script src="/assets/js/video.js"></script>
           <script src="/assets/js/summernote.js"></script>
+          <script src="/assets/js/subcourse.js"></script>
           <script>
 
             const courseSelect = document.getElementById('maincourse_category');

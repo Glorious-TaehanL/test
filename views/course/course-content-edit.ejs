@@ -19,7 +19,7 @@
           <h4 class="container mt-4"><strong>강의 콘탠츠 편집</strong></h4>
 
           <div class="container mt-3">
-            <form action="/course/content/add" method="POST" onsubmit="validateMyForm();">
+            <form action="/course/content/edit" method="POST" onsubmit="validateMyForm();">
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -43,6 +43,16 @@
                                     <input type="radio" id="video_option" name="video_option" value="vimeo" onchange="handleChange(event)" <% if(!youtubeCheck) { %> checked <% }%> >
                                     Vimeo
                                 </label>
+                            </div>
+                            <div class="hidden-area"  style="display: none;">
+                                <input id="subid" name="subid" type="text" value="<%= subcourse.sub.id %>"/>
+                                <input id="maincategory" name="maincategory" type="text" value="<%= subcourse.sub.maincategory %>"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check form-switch ps-0">
+                                    <input class="form-check-input ms-0" type="checkbox" role="switch" id="sampling_value" value="false" name="sampling_value" onchange="checkSampling()"  <% if(subcourse.sub.sampling) { %> checked <% }%> >
+                                    <label class="form-check-label ps-5" for="sampling_value">맛보기 영상 설정</label>
+                                  </div>
                             </div>
                             <div class="form-group">
                                 <label>강의 영상 링크</label>
@@ -71,6 +81,7 @@
           <script src="https://player.vimeo.com/api/player.js"></script>
           <script src="/assets/js/video.js"></script>
           <script src="/assets/js/summernote.js"></script>
+          <script src="/assets/js/subcourse.js"></script>
           <script>
             $( document ).ready(function() {
              

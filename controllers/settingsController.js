@@ -9,11 +9,23 @@ const configData = async (req, res) => {
 };
 
 const updateConfig = (req, res) => {
-  console.log(req.file.filename);
-  console.log(req.body);
-  Settings.create({ logo: req.file.filename, companyname: req.body.company_name, companycontact: req.body.company_tel, companyinfo: req.body.company_information }).then(() => {
-    console.log('Successfully update config');
-  });
+  const configData = Settings.find({});
+  if (!configData) {
+    Settings.create({ logo: req.file.filename, companyname: req.body.company_name, companycontact: req.body.company_tel, companyinfo: req.body.company_information }).then(() => {
+      console.log('Successfully update config');
+    });
+  } else {
+    let logoimg;
+
+    if (req.file) {
+      logoimg = req.file.filename;
+    } else {
+      logoimg = req.body.logo_img_container;
+    }
+    Settings.updateOne({}, { logo: logoimg, companyname: req.body.company_name, companycontact: req.body.company_tel, companyinfo: req.body.company_information }).then(() => {
+      console.log('Successfull updated');
+    });
+  }
 };
 
 module.exports = {

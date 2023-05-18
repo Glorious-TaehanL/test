@@ -30,6 +30,9 @@
                                                             background-size: contain; 	
                                                             background-position: center center;
                                                             background-image: url('/public/images/<%= setting.logo %>');">
+                            <div class="hidden-area"  style="display: none;">
+                                <input id="logo_img_container" name="logo_img_container" type="text" value="<%= setting.logo %>"/>
+                            </div>
                         <% }else{ %>
                             <i class="far fa-image" id="img-placeholder"></i>
                         <% } %>

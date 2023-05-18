@@ -11,6 +11,7 @@ const { StatusCodes } = require('http-status-codes');
 const getNoticeList = async (req, res) => {
   const totalNotice = await (await Notice.find({}, 'id')).length;
   const requestNoticePage = req.params;
+  console.log(req.user);
   const items = await Notice.find({})
     .sort({ id: -1 })
     .skip(NOTICE_ROW_COUNT * (requestNoticePage - 1))
@@ -21,6 +22,10 @@ const getNoticeList = async (req, res) => {
 const getMainCourse = async (req, res) => {
   const mainItems = await MainCourse.find();
   res.status(StatusCodes.OK).json({ mainItems });
+};
+
+const getAccessMainCourse = async (req, res) => {
+  res.status(StatusCodes.OK).json({ accesscourse: req.user.accesscourse });
 };
 
 const getSubCourse = async (req, res) => {
@@ -41,5 +46,6 @@ const getSubCourse = async (req, res) => {
 module.exports = {
   getNoticeList,
   getMainCourse,
+  getAccessMainCourse,
   getSubCourse,
 };

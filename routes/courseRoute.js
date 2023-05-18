@@ -1,5 +1,16 @@
 const express = require('express');
-const { addCourse, detailCourse, updateDetailCourse, listCourse, displayAddPost, displaySubCourseAdd, displaySubCourseEdit, subCourseList, subCourseAdd } = require('../controllers/courseController');
+const {
+  addCourse,
+  detailCourse,
+  updateDetailCourse,
+  listCourse,
+  displayAddPost,
+  displaySubCourseAdd,
+  displaySubCourseEdit,
+  subCourseList,
+  subCourseAdd,
+  subCourseEdit,
+} = require('../controllers/courseController');
 const { uploader } = require('../middleware/multer');
 const router = express.Router();
 
@@ -13,6 +24,7 @@ router.get('/content/add', displaySubCourseAdd);
 router.get('/content/edit/:id', displaySubCourseEdit);
 
 router.post('/content/add', subCourseAdd);
+router.post('/content/edit', subCourseEdit);
 router.post('/detail/update', uploader.single('thumnail_course'), updateDetailCourse);
 router.post('/add', uploader.single('thumnail_course'), addCourse);
 

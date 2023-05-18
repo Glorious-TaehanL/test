@@ -51,6 +51,9 @@ const CustomerSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide phone number'],
   },
+  accesscourse: {
+    type: [Number],
+  },
 });
 
 CustomerSchema.pre('save', async function () {
@@ -59,7 +62,7 @@ CustomerSchema.pre('save', async function () {
 });
 
 CustomerSchema.methods.createJWT = function () {
-  return jwt.sign({ email: this.email, name: this.name }, process.env.JWT_FRONT_KEY, {
+  return jwt.sign({ email: this.email, name: this.name, accesscourse: this.accesscourse }, process.env.JWT_FRONT_KEY, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };

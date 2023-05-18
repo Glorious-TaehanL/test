@@ -127,6 +127,7 @@ const subCourseAdd = async (req, res) => {
         maincategory: req.body.maincourse_category,
         content: req.body.note_content,
         link: req.body.subcourse_link,
+        sampling: req.body.sampling_value,
       })
         .then(function (result) {
           console.log(result);
@@ -166,6 +167,16 @@ const displaySubCourseEdit = async (req, res) => {
   res.render('course/course-content-edit.ejs', { user: req.user, subcourse: { sub: subCourse, main: mainCourseTitle.title }, youtubeCheck: videoYoutubeVendor });
 };
 
+const subCourseEdit = async (req, res) => {
+  SubCourse.findOneAndUpdate({ id: parseInt(req.body.subid) }, { title: req.body.subcourse_title, content: req.body.note_content, link: req.body.subcourse_link, sampling: req.body.sampling_value })
+    .then((doc) => {
+      res.status(StatusCodes.OK).redirect('/course/content/list');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 module.exports = {
   addCourse,
   detailCourse,
@@ -176,4 +187,5 @@ module.exports = {
   subCourseList,
   subCourseAdd,
   displaySubCourseEdit,
+  subCourseEdit,
 };

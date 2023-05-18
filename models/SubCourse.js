@@ -25,6 +25,10 @@ const SubCourseSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide Course video link.'],
   },
+  sampling: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model('sub-courses', SubCourseSchema);
