@@ -113,6 +113,6 @@ router.post('/findEmail', findCustomer);
  *       description: 'Error to get list'
  *       headers: {}
  */
-router.post('/getlist', getList);
+router.get('/getlist', getList);
 
 module.exports = router;
