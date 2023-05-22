@@ -28,7 +28,15 @@ const addCourse = (req, res) => {
   Sequences.findOneAndUpdate({ name: 'maincourse-number' }, { $inc: { counter: 1 } })
     .then(function (result) {
       const { counter } = result;
-      MainCourse.create({ id: counter, price: req.body.course_price, title: req.body.course_title, term: req.body.course_term, thumbnail: req.file.filename, description: req.body.course_description })
+      MainCourse.create({
+        id: counter,
+        price: req.body.course_price,
+        title: req.body.course_title,
+        term: req.body.course_term,
+        thumbnail: req.file.filename,
+        description: req.body.course_description,
+        information: req.body.course_information,
+      })
         .then(function () {
           console.log('successfully main course updated');
         })
@@ -62,7 +70,7 @@ const updateDetailCourse = async (req, res) => {
 
   MainCourse.findOneAndUpdate(
     { id: parseInt(req.body.id) },
-    { price: req.body.course_price, title: req.body.course_title, term: req.body.course_term, thumbnail: imgName, description: req.body.course_description },
+    { price: req.body.course_price, title: req.body.course_title, term: req.body.course_term, thumbnail: imgName, description: req.body.course_description, information: req.body.course_information },
     {}
   )
     .then((doc) => {

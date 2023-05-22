@@ -1,5 +1,5 @@
 const express = require('express');
-const { getNoticeList, getMainCourse, getAccessMainCourse, getSubCourse } = require('../controllers/jobsApiController');
+const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getSubCourse, getSubCourseDetail } = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 /**
@@ -48,6 +48,31 @@ router.get('/maincourse/list', getMainCourse);
 /**
  * @swagger
  * paths:
+ *  /jobs/maincourse/info/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: The mainCourse information by main course ID
+ *   get:
+ *    tags: [Jobs]
+ *    summary: Get Main Course information
+ *    operationId: MinfoData
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get main course information,  if main course does not have information return empty information'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get main course information'
+ *       headers: {}
+ */
+router.get('/maincourse/info/:id', getMainCourseInfor);
+
+/**
+ * @swagger
+ * paths:
  *  /jobs/maincourse/access/list:
  *   get:
  *    tags: [Jobs]
@@ -67,6 +92,13 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  * @swagger
  * paths:
  *  /jobs/subcourse/list/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: The subcourse list by main course ID
  *   get:
  *    tags: [Jobs]
  *    summary: Get Subcourse List
@@ -77,7 +109,7 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  *         schema:
  *         type: number
  *         required: true
- *         description: The page ID
+ *         description: The MainCourse Id
  *    responses:
  *     '200':
  *       description: 'Successfully get notice list'
@@ -87,5 +119,37 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  *       headers: {}
  */
 router.get('/subcourse/list/:id', getSubCourse);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/subcourse/detail/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: The subcourse detail by subcourse id
+ *   get:
+ *    tags: [Jobs]
+ *    summary: Get Subcourse detail
+ *    operationId: SubcourseDetail
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *         type: number
+ *         required: true
+ *         description: The subCourse Id
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get subCourse detail'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get subCourse detail'
+ *       headers: {}
+ */
+router.get('/subcourse/detail/:id', getSubCourseDetail);
 
 module.exports = router;

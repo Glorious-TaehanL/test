@@ -41,14 +41,23 @@
                   <input id="course_price" name="course_price" type="number" size="60" value="<%= course[0].price %>"  />원
                   <p>총강의 주차</p>
                   <input id="course_term" name="course_term" type="number" size="60" value="<%= course[0].term %>" />
-                  <p>강의 소개</p>
-                  <textarea name="course_description" cols="100" rows="10" ><%= course[0].description %></textarea>
+                  <p>강의 설명</p>
+                  <textarea name="course_description" cols="100" rows="10" ><%= course[0].description %></textarea>           
+                  <label>강의 소개</label>
+                  <p class="hidden-data" style="display: none;"><%= course[0].information %></p>
+                  <textarea id="summernote"  name="course_information" ></textarea>
                 </div>
                 
                 <button type="submit" class="btn btn-outline-secondary">Submit</button>
             </form>
           </div>
-        <script>
+          <script src="/assets/js/summernote.js"></script>
+          <script>
+            $( document ).ready(function() {
+                var data = $('.hidden-data').text();
+              $('#summernote').summernote('pasteHTML', data);
+              printVideo();
+           });
             function setThumbnail(event){
                 var reader = new FileReader();
                 reader.onload = function(event) {

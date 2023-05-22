@@ -38,11 +38,15 @@
                   <input id="course_teacher" name="course_teacher" type="text" size="60" />
                   <p>강의 소개</p>
                   <textarea name="course_description" cols="100" rows="10"></textarea>
+                  <label>강의 소개</label>
+                  <p class="hidden-data" style="display: none;"></p>
+                  <textarea id="summernote"  name="course_information" ></textarea>
                 </div>
                 
                 <button type="submit" class="btn btn-outline-secondary">Submit</button>
             </form>
           </div>
+          <script src="/assets/js/summernote.js"></script>
         <script>
             function setThumbnail(event){
                 var reader = new FileReader();

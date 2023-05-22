@@ -25,6 +25,10 @@ const MainCourseSchema = new mongoose.Schema({
     type: String,
     require: [true, 'Please provide Course description.'],
   },
+  information: {
+    type: String,
+    require: [true, 'Please provide Course information.'],
+  },
   createtime: {
     type: Date,
     default: Date.now,
