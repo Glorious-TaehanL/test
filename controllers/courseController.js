@@ -169,7 +169,6 @@ const displaySubCourseEdit = async (req, res) => {
       return result;
     })
     .catch(() => {});
-
   const mainCourseTitle = await MainCourse.findOne({ id: subCourse.maincategory }, { title: 1 });
 
   res.render('course/course-content-edit.ejs', { user: req.user, subcourse: { sub: subCourse, main: mainCourseTitle.title }, youtubeCheck: videoYoutubeVendor });

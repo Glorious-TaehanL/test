@@ -40,7 +40,7 @@ const getAccessMainCourse = async (req, res) => {
 
 const getSubCourse = async (req, res) => {
   const { id } = req.params;
-  const subItems = await SubCourse.find({ maincategory: id }, { id: 1, indexnumber: 1, title: 1, sampling: 1 })
+  await SubCourse.find({ maincategory: id }, { id: 1, indexnumber: 1, title: 1, sampling: 1 })
     .then((result) => {
       if (result == '') {
         res.status(StatusCodes.BAD_REQUEST).json({ msg: '잘못된 요청입니다. 강의분류나 강의콘탠츠가 존재하지 않습니다.' });
@@ -59,7 +59,21 @@ const getSubCourseDetail = async (req, res) => {
   if (!detail) {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: '존재하지 않는 강의 콘탠츠 id입니다. 다시확인해주세요.' });
   }
-  res.status(StatusCodes.OK).json({ subcourse: detail });
+
+  const maincat = parseInt(detail.maincategory);
+  const accesscor = parseInt(req.user.accesscourse);
+
+  if (accesscor != maincat) {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: '잘못된 요청입니다. 수강신청이력을 확인해주세요.' });
+  } else {
+    res.status(StatusCodes.OK).json({ subcourse: detail });
+  }
+};
+
+const updateCustomerToCourse = async (req, res) => {
+  const { subcourseId } = req.body;
+  const doc = SubCourse.findOneAndUpdate({ id: subcourseId }, { customer: req.user.num });
+  res.status(StatusCodes.OK).json({ doc });
 };
 
 module.exports = {
@@ -69,4 +83,5 @@ module.exports = {
   getAccessMainCourse,
   getSubCourse,
   getSubCourseDetail,
+  updateCustomerToCourse,
 };

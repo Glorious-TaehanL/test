@@ -62,16 +62,13 @@ CustomerSchema.pre('save', async function () {
 });
 
 CustomerSchema.methods.createJWT = function () {
-  return jwt.sign({ email: this.email, name: this.name, accesscourse: this.accesscourse }, process.env.JWT_FRONT_KEY, {
+  return jwt.sign({ num: this.num, email: this.email, name: this.name, accesscourse: this.accesscourse }, process.env.JWT_FRONT_KEY, {
     expiresIn: process.env.JWT_LIFETIME,
   });
 };
 
 CustomerSchema.methods.comparePassword = async function (canditatePassword) {
-  console.log('candi::' + canditatePassword);
-  console.log('this::' + this.password);
   const isMatch = await bcrypt.compare(canditatePassword, this.password);
-  console.log('isMatch::' + isMatch);
   return isMatch;
 };
 

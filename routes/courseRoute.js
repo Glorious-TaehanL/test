@@ -24,8 +24,9 @@ router.get('/content/add', displaySubCourseAdd);
 router.get('/content/edit/:id', displaySubCourseEdit);
 
 router.post('/content/add', subCourseAdd);
-router.post('/content/edit', subCourseEdit);
 router.post('/detail/update', uploader.single('thumnail_course'), updateDetailCourse);
 router.post('/add', uploader.single('thumnail_course'), addCourse);
+
+router.put('/content/edit', subCourseEdit);
 
 module.exports = router;

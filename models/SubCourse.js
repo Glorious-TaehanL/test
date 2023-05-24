@@ -29,6 +29,9 @@ const SubCourseSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  customer: {
+    type: [Number],
+  },
 });
 
 module.exports = mongoose.model('sub-courses', SubCourseSchema);
