@@ -49,8 +49,8 @@ router.post('/register', registerCustomer);
  *          schema:
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
- *              email: bob@gmail.com
- *              password: secret
+ *              email: test@test.com
+ *              password: xptmxm1123
  *    responses:
  *     '200':
  *       description: 'Successfully login and provide token'

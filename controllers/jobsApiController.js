@@ -38,6 +38,12 @@ const getAccessMainCourse = async (req, res) => {
   res.status(StatusCodes.OK).json({ accesscourse: req.user.accesscourse });
 };
 
+const getProgress = async (req, res) => {
+  console.log(req.params);
+  const totalSubcouresCnt = await (await SubCourse.find({ maincategory: req.params.id })).length;
+  console.log(totalSubcouresCnt);
+};
+
 const getSubCourse = async (req, res) => {
   const { id } = req.params;
   await SubCourse.find({ maincategory: id }, { id: 1, indexnumber: 1, title: 1, sampling: 1 })
@@ -70,24 +76,31 @@ const getSubCourseDetail = async (req, res) => {
 };
 
 const updateCustomerToSubCourse = async (req, res) => {
-  const { subcourseId } = req.body;
-  const doc = await SubCourse.findOne({ id: subcourseId });
+  const { maincourseId, subcourseId } = req.body;
+  const accessCourseByCustomer = Object.values(req.user.accesscourse);
 
-  if (!doc) {
-    res.status(StatusCodes.NOT_FOUND).json({ msg: '수강콘탠츠를 찾을 수 없습니다. 다시한번 확인해주세요.' });
-  } else {
-    if (doc.customer) {
-      const arr = Object.values(doc.customer);
-      if (arr.includes(req.user.num)) {
-      } else {
-        const updCourse = await SubCourse.findOneAndUpdate({ id: subcourseId }, { customer: req.user.num });
-        if (!updCourse) {
-          res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강진도등록에서 알수없는 에러가 발생했습니다.' });
+  if (accessCourseByCustomer.includes(maincourseId)) {
+    const doc = await SubCourse.findOne({ id: subcourseId });
+
+    if (!doc) {
+      res.status(StatusCodes.NOT_FOUND).json({ msg: '수강콘탠츠를 찾을 수 없습니다. 다시한번 확인해주세요.' });
+    } else {
+      if (doc.customer) {
+        const arr = Object.values(doc.customer);
+        if (arr.includes(req.user.num)) {
+          res.status(StatusCodes.OK);
+        } else {
+          const updCourse = await SubCourse.findOneAndUpdate({ id: subcourseId }, { customer: req.user.num });
+          if (!updCourse) {
+            res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강진도등록에서 알수없는 에러가 발생했습니다.' });
+          }
         }
       }
     }
+    res.status(StatusCodes.OK).json({ doc });
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강등록을 하지 않은 강의 입니다. 수강등록 이후에 이용해주세요.' });
   }
-  res.status(StatusCodes.OK).json({ doc });
 };
 
 module.exports = {
@@ -95,6 +108,7 @@ module.exports = {
   getMainCourse,
   getMainCourseInfor,
   getAccessMainCourse,
+  getProgress,
   getSubCourse,
   getSubCourseDetail,
   updateCustomerToSubCourse,

@@ -32,7 +32,7 @@
                               <th scope="col" class="th-name">이름</th>
                               <th scope="col" class="th-email">이메일</th>
                               <th scope="col" class="th-contact">연락처</th>
-                              <th scope="col" class="th-num">관리</th>
+                              <!-- <th scope="col" class="th-num">관리</th> -->
                           </tr>
                           </thead>
                           <tbody>
@@ -42,11 +42,11 @@
                                     <td><%= customers[i].name %></td>
                                     <td><%= customers[i].email %></td>
                                     <td><%= customers[i].phonenumber %></td>
-                                    <td>
+                                    <!-- <td>
                                         <div id="removeCustomer" data-id="<%= customers[i].num %>">
                                             <i class="fa-solid fa-user-slash"></i>
                                         </div>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             <% } %>
                           </tbody>
@@ -58,7 +58,20 @@
        </div>
        <!-- / Layout page -->
      </div>
+     <!-- <script>
+         const myDiv = document.getElementById('removeCustomer');
 
+            myDiv.addEventListener('click', function() {
+            const result = confirm('정말로 삭제하시겠습니까?');
+
+            if (result) {
+                // myDiv.remove();
+                console.log('요소가 삭제되었습니다.');
+            } else {
+                console.log('요소 삭제가 취소되었습니다.');
+            }
+            });
+     </script> -->
      <!-- Overlay -->
      <div class="layout-overlay layout-menu-toggle"></div>
    </div>

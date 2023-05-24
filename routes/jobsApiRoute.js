@@ -1,5 +1,5 @@
 const express = require('express');
-const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getSubCourse, getSubCourseDetail, updateCustomerToSubCourse } = require('../controllers/jobsApiController');
+const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getProgress, getSubCourse, getSubCourseDetail, updateCustomerToSubCourse } = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 /**
@@ -88,7 +88,23 @@ router.get('/maincourse/info/:id', getMainCourseInfor);
  */
 router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
 
-router.put('/maincourse/access/list', authenticateUser, getAccessMainCourse);
+/**
+ * @swagger
+ * paths:
+ *  /jobs/maincourse/getprogress/{id}:
+ *   get:
+ *    tags: [Jobs]
+ *    summary: Get Maincourse progress rate by customer
+ *    operationId: Getprogress
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get progress rate by customer'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get progress rate by customer'
+ *       headers: {}
+ */
+router.get('/maincourse/getprogress/:id', getProgress);
 
 /**
  * @swagger
@@ -170,7 +186,8 @@ router.get('/subcourse/detail/:id', authenticateUser, getSubCourseDetail);
  *          schema:
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
- *              subcourseId: 14
+ *              maincourseId: 15
+ *              subcourseId: 20
  *    responses:
  *     '200':
  *       description: 'Successfully updated customer progress'
