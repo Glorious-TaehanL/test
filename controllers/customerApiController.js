@@ -69,7 +69,12 @@ const loginCustomer = async (req, res) => {
   }
   // compare password
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  res.status(StatusCodes.OK).json({ user: { name: user.name, abandonedcart: user.abandonedcart }, token });
+};
+
+const saveCart = async (req, res) => {
+  const updateCart = await Customer.findOneAndUpdate({ email: req.body.email }, { abandonedcart: req.body.cart });
+  res.status(StatusCodes.OK).json({ updateCart });
 };
 
 const findCustomer = async (req, res) => {
@@ -94,6 +99,7 @@ const getList = async (req, res) => {
 module.exports = {
   registerCustomer,
   loginCustomer,
+  saveCart,
   findCustomer,
   getList,
 };

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getSubCourse, getSubCourseDetail, updateCustomerToCourse } = require('../controllers/jobsApiController');
+const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getSubCourse, getSubCourseDetail, updateCustomerToSubCourse } = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 /**
@@ -179,6 +179,6 @@ router.get('/subcourse/detail/:id', authenticateUser, getSubCourseDetail);
  *       description: 'Error to update customer progress'
  *       headers: {}
  */
-router.post('/subcourse/progress/update', authenticateUser, updateCustomerToCourse);
+router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubCourse);
 
 module.exports = router;

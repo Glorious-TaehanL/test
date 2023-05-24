@@ -25,8 +25,6 @@
             <!-- board list area -->
               <div id="board-list">
                   <div class="container">
-                    <div class="notice-act-section">
-                    </div>
                       <table class="board-table">
                           <thead>
                           <tr>
@@ -34,6 +32,7 @@
                               <th scope="col" class="th-name">이름</th>
                               <th scope="col" class="th-email">이메일</th>
                               <th scope="col" class="th-contact">연락처</th>
+                              <th scope="col" class="th-num">관리</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -43,11 +42,15 @@
                                     <td><%= customers[i].name %></td>
                                     <td><%= customers[i].email %></td>
                                     <td><%= customers[i].phonenumber %></td>
+                                    <td>
+                                        <div id="removeCustomer" data-id="<%= customers[i].num %>">
+                                            <i class="fa-solid fa-user-slash"></i>
+                                        </div>
+                                    </td>
                                 </tr>
                             <% } %>
                           </tbody>
                       </table>
-                      
                   </div>
               </div>
           </section>

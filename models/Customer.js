@@ -54,6 +54,9 @@ const CustomerSchema = new mongoose.Schema({
   accesscourse: {
     type: [Number],
   },
+  abandonedcart: {
+    type: [Number],
+  },
 });
 
 CustomerSchema.pre('save', async function () {

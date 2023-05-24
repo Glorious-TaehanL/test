@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, loginCustomer, findCustomer, getList } = require('../controllers/customerApiController');
+const { registerCustomer, loginCustomer, saveCart, findCustomer, getList } = require('../controllers/customerApiController');
 const router = express.Router();
 
 /**
@@ -87,6 +87,34 @@ router.post('/login', loginCustomer);
  *       headers: {}
  */
 router.post('/findEmail', findCustomer);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/cartsave:
+ *   post:
+ *    tags: [Customer]
+ *    summary: Customer cart save
+ *    operationId: SaveCart
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              email: bob@gmail.com
+ *              cart: [14,15]
+ *    responses:
+ *     '200':
+ *       description: 'Successfully update cart'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to  update cart'
+ *       headers: {}
+ */
+router.post('/savecart', saveCart);
 
 /**
  * @swagger
