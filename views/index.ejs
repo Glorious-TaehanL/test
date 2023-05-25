@@ -26,7 +26,7 @@
                         <div class="card-body">
                           <h5 class="card-title text-primary">LMS Management system 입니다. 🎉</h5>
                           <p class="mb-4">
-                            강의는 <span class="fw-bold"><%= reportData.mainCourse %></span>종류가 있으며, 총강의는 미완)20개입니다.</p>
+                            강의는 <span class="fw-bold"><%= reportData.mainCourseCnt %></span>종류가 있으며, 총강의는 <%= reportData.subCourseCnt%>개입니다.</p>
 
                           <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
                         </div>
@@ -76,8 +76,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">공지사항</span>
-                          <h3 class="card-title mb-2"><%= reportData.notice %>개</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> 미완)+2개</small>
+                          <h3 class="card-title mb-2"><%= reportData.noticeCnt %>개</h3>
                         </div>
                       </div>
                     </div>
@@ -110,8 +109,8 @@
                             </div>
                           </div>
                           <span>강의 종류</span>
-                          <h3 class="card-title text-nowrap mb-1"><%= reportData.mainCourse %>개</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> 미완)+1개</small>
+                          <h3 class="card-title text-nowrap mb-1"><%= reportData.mainCourseCnt %>개</h3>
+                          <!-- <small class="text-success fw-semibold"><i class="fa-solid fa-check"></i> 총 강의의 수 </small> -->
                         </div>
                       </div>
                     </div>
@@ -232,8 +231,7 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">총 수강생</span>
-                          <h3 class="card-title mb-2">미완)120명</h3>
-                          <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>미완) +12명</small>
+                          <h3 class="card-title mb-2"><%= reportData.customerCnt %> 명</h3>
                         </div>
                       </div>
                     </div>

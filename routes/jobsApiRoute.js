@@ -92,6 +92,13 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  * @swagger
  * paths:
  *  /jobs/maincourse/getprogress/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: MainCourse Id
  *   get:
  *    tags: [Jobs]
  *    summary: Get Maincourse progress rate by customer
@@ -104,7 +111,7 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  *       description: 'Error to get progress rate by customer'
  *       headers: {}
  */
-router.get('/maincourse/getprogress/:id', getProgress);
+router.get('/maincourse/getprogress/:id', authenticateUser, getProgress);
 
 /**
  * @swagger

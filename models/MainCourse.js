@@ -1,5 +1,31 @@
 const mongoose = require('mongoose');
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    MainCourseRequest:
+ *      title: MainCourse Models
+ *      required:
+ *       - price
+ *       - term
+ *       - title
+ *       - thumbnail
+ *       - description
+ *       - information
+ *      properties:
+ *        price:
+ *         type: number
+ *        term:
+ *         type: number
+ *        title:
+ *         type: string
+ *        thumbnail:
+ *         type: string
+ *        description:
+ *         type: string
+ *        information:
+ *         type: string
+ */
 const MainCourseSchema = new mongoose.Schema({
   id: {
     type: Number,

@@ -38,10 +38,29 @@ const getAccessMainCourse = async (req, res) => {
   res.status(StatusCodes.OK).json({ accesscourse: req.user.accesscourse });
 };
 
+/**
+ *
+ * @param {*} id : MainCourse Id
+ * @param {*} req.user : user information
+ */
 const getProgress = async (req, res) => {
-  console.log(req.params);
-  const totalSubcouresCnt = await (await SubCourse.find({ maincategory: req.params.id })).length;
-  console.log(totalSubcouresCnt);
+  const { id } = req.params;
+  const accesscourseArr = Object.values(req.user.accesscourse).map(Number);
+
+  if (accesscourseArr.length != 0) {
+    if (accesscourseArr.includes(parseInt(id))) {
+      const customerSubcourseCnt = await (await SubCourse.find({ maincategory: id, customer: { $in: [req.user.num] } })).length;
+      const totalSubcouresCnt = await (await SubCourse.find({ maincategory: id })).length;
+      var progressRate = (customerSubcourseCnt / totalSubcouresCnt) * 100;
+      var progressPercentage = progressRate.toFixed(0);
+
+      res.status(StatusCodes.OK).json({ data: progressPercentage });
+    } else {
+      res.status(StatusCodes.OK).json({ msg: '결제된 강의 목록에 해당되지 않습니다.' });
+    }
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: '결제된 강의가 없습니다, 결제 이후 수강해주세요.' });
+  }
 };
 
 const getSubCourse = async (req, res) => {

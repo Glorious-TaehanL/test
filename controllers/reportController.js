@@ -1,25 +1,34 @@
 const MainCourse = require('../models/MainCourse');
+const SubCourse = require('../models/SubCourse');
+const Customer = require('../models/Customer');
 const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
 
 const displayReportData = async (req, res) => {
-  const noticeCnt = await Notice.countDocuments({ content: { $exists: true } })
-    .then((count) => {
-      console.log(`'name' 필드의 데이터 갯수: ${count}`);
-      return count;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  const mainCourseCnt = await MainCourse.countDocuments({ title: { $exists: true } })
-    .then((count) => {
-      return count;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  //Get notice count
+  var noticeCnt = await Notice.countDocuments({ content: { $exists: true } });
+  if (!noticeCnt) {
+    var noticeCnt = '#err';
+  }
 
-  res.render('index', { user: req.user, reportData: { notice: noticeCnt, mainCourse: mainCourseCnt } });
+  //Get maincourse count
+  var mainCourseCnt = await MainCourse.countDocuments({ title: { $exists: true } });
+  if (!mainCourseCnt) {
+    var mainCourseCnt = '#err';
+  }
+
+  //Get subcourse count
+  var subCourseCnt = await SubCourse.countDocuments({ id: { $exists: true } });
+  if (!subCourseCnt) {
+    var subCourseCnt = '#err';
+  }
+
+  //Get customer count
+  var customerCnt = await Customer.countDocuments({ email: { $exists: true } });
+  if (!customerCnt) {
+    var customerCnt = '#err';
+  }
+  res.render('index', { user: req.user, reportData: { noticeCnt, mainCourseCnt, subCourseCnt, customerCnt } });
 };
 
 module.exports = {
