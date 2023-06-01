@@ -96,13 +96,22 @@ const detailPost = (req, res) => {
  * @return list page.
  * @Author : ted
  */
-const editPost = (req, res) => {
+const editPost = async (req, res) => {
   pageBreadCrumb = breadcrum + ' 공지사항 추가';
-  Notice.updateOne({ id: parseInt(req.body.id) }, { $set: { title: req.body.title, content: req.body.content } })
-    .then(function () {
-      res.status(StatusCodes.OK).redirect('/notice/list');
-    })
-    .catch(function () {});
+  const updated = await Notice.updateOne({ id: parseInt(req.body.id) }, { $set: { title: req.body.title, content: req.body.content } });
+
+  if (updated) {
+    console.log('updated inn');
+    console.log(req.body.id);
+    await Notice.findOne({ id: parseInt(req.body.id) })
+      .then((result) => {
+        res.render('edit.ejs', { user: req.user, pageinfo: pageBreadCrumb, post: result, msg: '성공적으로 업데이트 되었습니다.' });
+      })
+      .catch((err) => {
+        res.status(StatusCodes.OK).redirect('/notice/list');
+      });
+  }
+  // res.status(StatusCodes.OK).redirect('/notice/list');
 };
 
 /**
@@ -128,7 +137,7 @@ const displayEditPage = (req, res) => {
     .then(function (result) {
       console.log(result);
       if (result) {
-        res.render('edit.ejs', { user: req.user, pageinfo: pageBreadCrumb, post: result });
+        res.render('edit.ejs', { user: req.user, pageinfo: pageBreadCrumb, post: result, msg: '' });
       } else {
         // not found post by id (err)
         res.send('null');

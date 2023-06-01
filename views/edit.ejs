@@ -12,7 +12,11 @@
         <!-- Navbar -->
         <%- include('navbar.ejs') %>
         <!-- /Navbar -->
-
+        <% if(msg){ %>
+          <div class="alert alert-success" role="alert">
+            <%= msg %>
+          </div>
+          <% } %>
          <!-- Content wrapper -->
          <div class="content-wrapper">
 
@@ -73,9 +77,10 @@
               return true;
             }
             $( document ).ready(function() {
+              //delete <p> tag.
               var data = $('.hidden-data').text();
-              console.log(data);
-             $('#summernote').summernote('pasteHTML', data);
+              var result = data.substring(3,data.length - 4);
+             $('#summernote').summernote('pasteHTML', result);
            });
           </script>
         
