@@ -76,7 +76,7 @@ router.get('/maincourse/info/:id', getMainCourseInfor);
  *  /jobs/maincourse/access/list:
  *   get:
  *    tags: [Jobs]
- *    summary: Get Access Main Course id list
+ *    summary: (o) Get Access Main Course id list
  *    operationId: AccessMcourseList
  *    responses:
  *     '200':
@@ -101,7 +101,7 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  *      description: MainCourse Id
  *   get:
  *    tags: [Jobs]
- *    summary: Get Maincourse progress rate by customer
+ *    summary: (o) Get Maincourse progress rate by customer
  *    operationId: Getprogress
  *    responses:
  *     '200':
@@ -158,7 +158,7 @@ router.get('/subcourse/list/:id', getSubCourse);
  *      description: The subcourse detail by subcourse id
  *   get:
  *    tags: [Jobs]
- *    summary: Get Subcourse detail
+ *    summary: (o) Get Subcourse detail
  *    operationId: SubcourseDetail
  *    parameters:
  *       - in: path
@@ -183,7 +183,7 @@ router.get('/subcourse/detail/:id', authenticateUser, getSubCourseDetail);
  *  /jobs/subcourse/progress/update:
  *   post:
  *    tags: [Jobs]
- *    summary: update customer's progress for this subcourse
+ *    summary: (o) update customer's progress for this subcourse
  *    operationId: updateSubcourseCustomer
  *    requestBody:
  *      description: ''

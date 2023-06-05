@@ -101,8 +101,6 @@ const editPost = async (req, res) => {
   const updated = await Notice.updateOne({ id: parseInt(req.body.id) }, { $set: { title: req.body.title, content: req.body.content } });
 
   if (updated) {
-    console.log('updated inn');
-    console.log(req.body.id);
     await Notice.findOne({ id: parseInt(req.body.id) })
       .then((result) => {
         res.render('edit.ejs', { user: req.user, pageinfo: pageBreadCrumb, post: result, msg: '성공적으로 업데이트 되었습니다.' });

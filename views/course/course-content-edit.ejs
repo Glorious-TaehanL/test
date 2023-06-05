@@ -85,8 +85,9 @@
           <script>
             $( document ).ready(function() {
                 var data = $('.hidden-data').text();
-              $('#summernote').summernote('pasteHTML', data);
-              printVideo();
+                var result = data.substring(3,data.length - 4);
+                $('#summernote').summernote('pasteHTML', result);
+                printVideo();
            });
           </script>
 

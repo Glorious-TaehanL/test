@@ -91,7 +91,7 @@ router.post('/findEmail', findCustomer);
 /**
  * @swagger
  * paths:
- *  /customer/cartsave:
+ *  /customer/saveCart:
  *   post:
  *    tags: [Customer]
  *    summary: Customer cart save
