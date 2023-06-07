@@ -2,6 +2,7 @@
 const MainCourse = require('../models/MainCourse');
 const Notice = require('../models/Notice');
 const SubCourse = require('../models/SubCourse');
+const Order = require('../models/Order');
 
 //config
 const NOTICE_ROW_COUNT = 12;
@@ -122,6 +123,10 @@ const updateCustomerToSubCourse = async (req, res) => {
   }
 };
 
+const createOrder = async (req, res) => {
+  res.json(req.body);
+};
+
 module.exports = {
   getNoticeList,
   getMainCourse,
@@ -131,4 +136,5 @@ module.exports = {
   getSubCourse,
   getSubCourseDetail,
   updateCustomerToSubCourse,
+  createOrder,
 };

@@ -1,5 +1,15 @@
 const express = require('express');
-const { getNoticeList, getMainCourse, getMainCourseInfor, getAccessMainCourse, getProgress, getSubCourse, getSubCourseDetail, updateCustomerToSubCourse } = require('../controllers/jobsApiController');
+const {
+  getNoticeList,
+  getMainCourse,
+  getMainCourseInfor,
+  getAccessMainCourse,
+  getProgress,
+  getSubCourse,
+  getSubCourseDetail,
+  updateCustomerToSubCourse,
+  createOrder,
+} = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 /**
@@ -204,5 +214,35 @@ router.get('/subcourse/detail/:id', authenticateUser, getSubCourseDetail);
  *       headers: {}
  */
 router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubCourse);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/order/create:
+ *   post:
+ *    tags: [Jobs]
+ *    summary: (o) create order
+ *    operationId: createorder
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/OrderSchema'
+ *          example:
+ *              customerid: 15
+ *              amount: 200000
+ *              courses: [13]
+ *              paymentid: imp_00001
+ *    responses:
+ *     '200':
+ *       description: 'Successfully create order'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to create order'
+ *       headers: {}
+ */
+router.post('/order/create', createOrder);
 
 module.exports = router;
