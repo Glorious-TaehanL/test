@@ -73,7 +73,7 @@ const loginCustomer = async (req, res) => {
 };
 
 const saveCart = async (req, res) => {
-  const updateCart = await Customer.findOneAndUpdate({ email: req.body.email }, { abandonedcart: req.body.cart });
+  const updateCart = await Customer.findOneAndUpdate({ email: req.body.email }, { abandonedcart: req.body.cart }, { new: true });
   res.status(StatusCodes.OK).json({ updateCart });
 };
 
