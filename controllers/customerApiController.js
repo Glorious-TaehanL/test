@@ -96,10 +96,21 @@ const getList = async (req, res) => {
   res.status(StatusCodes.OK).json({ list: list });
 };
 
+const getCustomerInfo = async (req, res) => {
+  console.log(req.user);
+  const customer = await Customer.findOne({ email: req.user.userEmail });
+  if (!customer) {
+    throw new UnauthenticatedError('입력하신 사용자 정보와 일치하는 데이터가 없습니다.');
+  } else {
+    res.status(StatusCodes.OK).json({ user: { name: customer.name, email: customer.email, phonenumber: customer.phonenumber } });
+  }
+};
+
 module.exports = {
   registerCustomer,
   loginCustomer,
   saveCart,
   findCustomer,
   getList,
+  getCustomerInfo,
 };

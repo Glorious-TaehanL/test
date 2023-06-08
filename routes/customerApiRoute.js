@@ -1,5 +1,6 @@
 const express = require('express');
-const { registerCustomer, loginCustomer, saveCart, findCustomer, getList } = require('../controllers/customerApiController');
+const { registerCustomer, loginCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
+const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 
 /**
@@ -142,5 +143,32 @@ router.post('/savecart', saveCart);
  *       headers: {}
  */
 router.get('/getlist', getList);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/getcustomer:
+ *   get:
+ *    tags: [Customer]
+ *    summary: (o) Customer get info
+ *    operationId: getCustomerInfo
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              name: bob
+ *    responses:
+ *     '200':
+ *       description: 'Successfully find customer'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get customer'
+ *       headers: {}
+ */
+router.get('/getcustomer', authenticateUser, getCustomerInfo);
 
 module.exports = router;
