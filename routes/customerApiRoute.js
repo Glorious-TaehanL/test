@@ -160,7 +160,6 @@ router.get('/getlist', getList);
  *          schema:
  *              $ref: '#/components/schemas/CustomerRequest'
  *          example:
- *              name: bob
  *    responses:
  *     '200':
  *       description: 'Successfully find customer'

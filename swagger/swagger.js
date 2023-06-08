@@ -7,7 +7,7 @@ const options = {
     info: {
       version: '1.0.1',
       title: 'LMS API DOCUMENT.',
-      description: '백엔드에서 사용하는 api는 표시되지 않습니다. 프론트에서 call가능한 api만 표시됩니다.',
+      description: '백엔드에서 사용하는 api는 표시되지 않습니다. 프론트에서 call가능한 api만 표시됩니다. (o) <- 표시되어있는 api는 토큰필요성을 표시합니다.',
     },
     servers: [
       {
