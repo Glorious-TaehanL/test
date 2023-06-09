@@ -243,6 +243,6 @@ router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubC
  *       description: 'Error to create order'
  *       headers: {}
  */
-router.post('/order/create', createOrder);
+router.post('/order/create', authenticateUser, createOrder);
 
 module.exports = router;

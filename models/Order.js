@@ -22,7 +22,7 @@ const mongoose = require('mongoose');
  */
 const OrderSchema = new mongoose.Schema({
   id: {
-    type: Number,
+    type: String,
     require: [true, 'Please provide sequence number'],
   },
   customerid: {
