@@ -87,8 +87,13 @@ const getSubCourseDetail = async (req, res) => {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: '존재하지 않는 강의 콘탠츠 id입니다. 다시확인해주세요.' });
   } else {
     const maincat = parseInt(detail.maincategory);
-    const accesscor = parseInt(req.user.accesscourse);
-    if (accesscor != maincat) {
+    const accesscors = req.user.accesscourse;
+    var flag = false;
+    if (accesscors.includes(maincat)) {
+      flag = true;
+    }
+
+    if (!flag) {
       res.status(StatusCodes.BAD_REQUEST).json({ msg: '잘못된 요청입니다. 수강신청이력을 확인해주세요.' });
     } else {
       res.status(StatusCodes.OK).json({ subcourse: detail });
