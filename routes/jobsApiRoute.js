@@ -7,6 +7,7 @@ const {
   getProgress,
   getSubCourse,
   getSubCourseDetail,
+  getSubCourseSampleDetail,
   updateCustomerToSubCourse,
   createOrder,
 } = require('../controllers/jobsApiController');
@@ -186,6 +187,38 @@ router.get('/subcourse/list/:id', getSubCourse);
  *       headers: {}
  */
 router.get('/subcourse/detail/:id', authenticateUser, getSubCourseDetail);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/subcourse/sample/detail/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: The subcourse detail by subcourse id
+ *   get:
+ *    tags: [Jobs]
+ *    summary: Get Subcourse sample detail
+ *    operationId: SubcourseSampleDetail
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *         type: number
+ *         required: true
+ *         description: The subCourse Id
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get subCourse sample detail'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get subCourse sample detail'
+ *       headers: {}
+ */
+router.get('/subcourse/sample/detail/:id', getSubCourseSampleDetail);
 
 /**
  * @swagger
