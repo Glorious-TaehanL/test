@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, loginCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
+const { registerCustomer, editCustomer, loginCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 
@@ -33,6 +33,37 @@ const router = express.Router();
  *       headers: {}
  */
 router.post('/register', registerCustomer);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/edit:
+ *   post:
+ *    tags: [Customer]
+ *    summary: Edit Customer
+ *    operationId: editCustomer
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              num: 40 //auto increment
+ *              name: bob
+ *              email: bob@gmail.com
+ *              password: secret
+ *              phonenumber: 01012341234
+ *    responses:
+ *     '200':
+ *       description: 'Successfully updated edit customer'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to updated edit customer'
+ *       headers: {}
+ */
+router.post('/edit', editCustomer);
 
 /**
  * @swagger

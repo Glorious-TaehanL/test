@@ -64,6 +64,19 @@ CustomerSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+CustomerSchema.pre('findOneAndUpdate', async function (next) {
+  try {
+    if (this._update.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(this._update.password, salt);
+      this._update.password = hashedPassword;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 CustomerSchema.methods.createJWT = function () {
   return jwt.sign({ num: this.num, email: this.email, name: this.name, accesscourse: this.accesscourse }, process.env.JWT_FRONT_KEY, {
     expiresIn: process.env.JWT_LIFETIME,

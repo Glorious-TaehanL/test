@@ -44,6 +44,31 @@ const registerCustomer = async (req, res) => {
 };
 
 /**
+ * @brief [ Frontend-API ] editCustomer
+ *
+ * @param {*} req req.body customer registration information
+ * @param {*} res
+ *
+ * @return token and user name.
+ */
+const editCustomer = async (req, res) => {
+  const { name, email, password, phonenumber } = req.body;
+
+  if (!name || !email || !password || !phonenumber) {
+    throw new CustomError.BadRequestError('수정할 데이터 중 null값이 존재합니다. 다시확인해주세요.');
+  }
+
+  Customer.findOneAndUpdate({ email: email }, { name, password, phonenumber })
+    .then((customer) => {
+      const token = customer.createJWT();
+      res.status(StatusCodes.CREATED).json({ customer: { name: customer.name }, token });
+    })
+    .catch((err) => {
+      res.status(StatusCodes.BAD_REQUEST).json({ msg: `${err}` });
+    });
+};
+
+/**
  * @brief [ Frontend-API ] loginCustomer
  *
  * @param {*} req email and password
@@ -108,6 +133,7 @@ const getCustomerInfo = async (req, res) => {
 
 module.exports = {
   registerCustomer,
+  editCustomer,
   loginCustomer,
   saveCart,
   findCustomer,
