@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, editCustomer, loginCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
+const { registerCustomer, editCustomer, loginCustomer, checkCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 
@@ -93,6 +93,33 @@ router.post('/edit', editCustomer);
  */
 router.post('/login', loginCustomer);
 
+/**
+ * @swagger
+ * paths:
+ *  /customer/check:
+ *   post:
+ *    tags: [Customer]
+ *    summary: Customer pw check
+ *    operationId: CheckCustomer
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *              email: test@test.com
+ *              password: xptmxm1123
+ *    responses:
+ *     '200':
+ *       description: 'Successfully Check email/pw'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to check email/pw'
+ *       headers: {}
+ */
+router.post('/check', checkCustomer);
 /**
  * @swagger
  * paths:

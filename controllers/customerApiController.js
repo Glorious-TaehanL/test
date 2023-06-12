@@ -97,6 +97,34 @@ const loginCustomer = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: { id: user.num, name: user.name, email: user.email, abandonedcart: user.abandonedcart }, token });
 };
 
+/**
+ * @brief [ Frontend-API ] checkCustomer
+ *
+ * @param {*} req email and password
+ * @param {*} res
+ *
+ * @return true or false
+ */
+const checkCustomer = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new BadRequestError('현재 비밀번호를 입력해주세요.');
+  }
+
+  const user = await Customer.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError('입력하신 정보가 일치하는 유저가 없습니다.');
+  }
+
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    res.status(StatusCodes.OK).json({ data: false });
+  } else {
+    res.status(StatusCodes.OK).json({ data: true });
+  }
+};
+
 const saveCart = async (req, res) => {
   const updateCart = await Customer.findOneAndUpdate({ email: req.body.email }, { abandonedcart: req.body.cart }, { new: true });
   res.status(StatusCodes.OK).json({ updateCart });
@@ -135,6 +163,7 @@ module.exports = {
   registerCustomer,
   editCustomer,
   loginCustomer,
+  checkCustomer,
   saveCart,
   findCustomer,
   getList,
