@@ -58,7 +58,7 @@ const editCustomer = async (req, res) => {
     throw new CustomError.BadRequestError('수정할 데이터 중 null값이 존재합니다. 다시확인해주세요.');
   }
 
-  Customer.findOneAndUpdate({ email: email }, { name, password, phonenumber })
+  Customer.findOneAndUpdate({ email }, { name, password, phonenumber })
     .then((customer) => {
       const token = customer.createJWT();
       res.status(StatusCodes.CREATED).json({ customer: { name: customer.name }, token });

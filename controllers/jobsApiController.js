@@ -84,6 +84,28 @@ const getSubCourse = async (req, res) => {
     });
 };
 
+const getContinueSubCourse = async (req, res) => {
+  const { id } = req.params;
+  const accesscourseArr = Object.values(req.user.accesscourse).map(Number);
+
+  if (accesscourseArr.length != 0) {
+    if (accesscourseArr.includes(parseInt(id))) {
+      const customerSubcourses = await SubCourse.find({ maincategory: id, customer: { $nin: [req.user.num] } }).sort({ id: 1 });
+      if (!customerSubcourses) {
+        res.status(StatusCodes.OK).json({ msg: '더이상 수강할 강의가 존재하지 않습니다.' });
+      } else {
+        res.status(StatusCodes.OK).json({ subcourse_id: customerSubcourses[0].id });
+      }
+    } else {
+      res.status(StatusCodes.OK).json({ msg: '결제된 강의가 아닙니다. 결제 이후 수강해주세요.' });
+    }
+  } else {
+    res.status(StatusCodes.BAD_REQUEST).json({ msg: '결제된 강의가 없습니다, 결제 이후 수강해주세요.' });
+  }
+  console.log(accesscourseArr);
+  res.status(StatusCodes.OK);
+};
+
 const getSubCourseDetail = async (req, res) => {
   const { id } = req.params;
   const detail = await SubCourse.findOne({ id: id });
@@ -174,6 +196,7 @@ module.exports = {
   getAccessMainCourse,
   getProgress,
   getSubCourse,
+  getContinueSubCourse,
   getSubCourseDetail,
   getSubCourseSampleDetail,
   updateCustomerToSubCourse,

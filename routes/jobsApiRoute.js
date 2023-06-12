@@ -10,6 +10,7 @@ const {
   getSubCourseSampleDetail,
   updateCustomerToSubCourse,
   createOrder,
+  getContinueSubCourse,
 } = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
@@ -155,6 +156,38 @@ router.get('/maincourse/getprogress/:id', authenticateUser, getProgress);
  *       headers: {}
  */
 router.get('/subcourse/list/:id', getSubCourse);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/subcourse/continue/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: The Continue for subcourse feature
+ *   get:
+ *    tags: [Jobs]
+ *    summary: (o) Get Continue for subcourse
+ *    operationId: ContinueSubCourse
+ *    parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *         type: number
+ *         required: true
+ *         description: The MainCourse Id
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get Continue subcourse id'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get Continue subcourse id'
+ *       headers: {}
+ */
+router.get('/subcourse/continue/:id', authenticateUser, getContinueSubCourse);
 
 /**
  * @swagger
