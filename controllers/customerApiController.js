@@ -94,7 +94,7 @@ const loginCustomer = async (req, res) => {
   }
   // compare password
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { name: user.name, email: user.email, abandonedcart: user.abandonedcart }, token });
+  res.status(StatusCodes.OK).json({ user: { id: user.num, name: user.name, email: user.email, abandonedcart: user.abandonedcart }, token });
 };
 
 const saveCart = async (req, res) => {
