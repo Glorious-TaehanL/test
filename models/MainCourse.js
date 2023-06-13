@@ -31,6 +31,10 @@ const MainCourseSchema = new mongoose.Schema({
     type: Number,
     require: [true, 'Please provide sequence number'],
   },
+  customerCount: {
+    type: Number,
+    default: 0,
+  },
   price: {
     type: Number,
     require: [true, 'Please provide course price'],

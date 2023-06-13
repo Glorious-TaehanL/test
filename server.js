@@ -25,9 +25,6 @@ let corsOptions = {
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-// Middleware
-const authenticateUser = require('./middleware/authenticationUser');
-
 // Router init.
 const adminRouter = require('./routes/adminRoute');
 const authRouter = require('./routes/authRoute');
@@ -38,6 +35,9 @@ const reportRouter = require('./routes/reportRoute');
 const customerApiRouter = require('./routes/customerApiRoute');
 const jobsApiRouter = require('./routes/jobsApiRoute');
 const settingsRouter = require('./routes/settingsRoute');
+
+//logger
+const logger = require('./winston/logger');
 
 //swagger
 const { swaggerUi, specs } = require('./swagger/swagger');
@@ -79,7 +79,6 @@ app.use('/settings', settingsRouter);
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api/v1/customer', customerApiRouter);
-// app.use('/api/v1/jobs', authenticateUser, jobsApiRouter);
 app.use('/api/v1/jobs', jobsApiRouter);
 
 app.get('/', isLoggedin, reportRouter);
@@ -92,7 +91,7 @@ const start = async () => {
     await connectDB(process.env.MONGO_URI);
     app.listen(port, console.log(`Sever Listening port number is : ${port}`));
   } catch (error) {
-    console.log(error);
+    logger.error('서버 로드과정에서 에러가 발생했습니다 : ' + error);
   }
 };
 

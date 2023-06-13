@@ -4,6 +4,7 @@ const Notice = require('../models/Notice');
 const CustomError = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
+const logger = require('../winston/logger');
 
 /**
  * @brief [ Frontend-API ] registerCustomer
@@ -50,7 +51,7 @@ const registerCustomer = async (req, res) => {
  * @param {*} res
  */
 const withdrawalCustomer = async (req, res) => {
-  const userEmail = req.user.userEmail;
+  const userEmail = req.user.email;
 
   Customer.deleteOne({ email: userEmail })
     .then(() => {
@@ -143,11 +144,38 @@ const checkCustomer = async (req, res) => {
   }
 };
 
+/**
+ * @brief saveCart
+ *
+ * @param {*} req  email, cart
+ * @param {*} res
+ *
+ * @return updateCart list
+ */
 const saveCart = async (req, res) => {
   const updateCart = await Customer.findOneAndUpdate({ email: req.body.email }, { abandonedcart: req.body.cart }, { new: true });
   res.status(StatusCodes.OK).json({ updateCart });
 };
 
+const saveAccessCourse = async (email, courseId) => {
+  const update = { $push: { accesscourse: courseId } };
+  await Customer.findOneAndUpdate({ email: email }, update, { new: true })
+    .then(() => {
+      logger.info('Successfully updated Access Course on customer docs. User EMail : ' + email);
+      return true;
+    })
+    .catch((err) => {
+      logger.error(err);
+      return false;
+    });
+};
+
+/**
+ * @brief [ Frontend-API ] findCustomer
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 const findCustomer = async (req, res) => {
   const { name } = req.body;
 
@@ -167,9 +195,16 @@ const getList = async (req, res) => {
   res.status(StatusCodes.OK).json({ list: list });
 };
 
+/**
+ * @brief getCustomerInfo
+ *
+ * @param {*} req token
+ * @param {*} res
+ *
+ * @return user information.
+ */
 const getCustomerInfo = async (req, res) => {
-  console.log(req.user);
-  const customer = await Customer.findOne({ email: req.user.userEmail });
+  const customer = await Customer.findOne({ email: req.user.email });
   if (!customer) {
     throw new UnauthenticatedError('입력하신 사용자 정보와 일치하는 데이터가 없습니다.');
   } else {
@@ -184,6 +219,7 @@ module.exports = {
   loginCustomer,
   checkCustomer,
   saveCart,
+  saveAccessCourse,
   findCustomer,
   getList,
   getCustomerInfo,

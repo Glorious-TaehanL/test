@@ -2,6 +2,8 @@ const MainCourse = require('../models/MainCourse');
 const Sequences = require('../models/Sequence');
 const SubCourse = require('../models/SubCourse');
 const StatusCodes = require('http-status-codes');
+//logger
+const logger = require('../winston/logger');
 
 /**
  * @brief Display to add post page
@@ -20,11 +22,10 @@ const displayAddPost = (req, res) => {
  * @param {*} req.file filename.
  * @param {*} req.body course_title/ course_description
  * @param {*} res
- * @return nothing. <-작업해야함.
+ * @return Redirect Main course list with updated query value.
  */
-const addCourse = (req, res) => {
-  console.log(req.file.filename);
-  console.log(req.body);
+const addCourse = async (req, res) => {
+  var createMainCourseFlag = false;
   Sequences.findOneAndUpdate({ name: 'maincourse-number' }, { $inc: { counter: 1 } })
     .then(function (result) {
       const { counter } = result;
@@ -38,24 +39,28 @@ const addCourse = (req, res) => {
         information: req.body.course_information,
       })
         .then(function () {
-          console.log('successfully main course updated');
+          logger.info('successfully main course updated.');
+          res.redirect('/course?updated=true');
         })
         .catch(function (err) {
-          console.log(err);
-          console.log('Invaild to update main course');
+          logger.error(err);
         });
     })
     .catch(function (err) {
-      console.log(err);
+      logger.error(err);
     });
 };
 
 const detailCourse = async (req, res) => {
   const { id } = req.params;
-  const maincourse = await MainCourse.find({ id: req.params.id }).then((result) => {
-    return result;
-  });
-  console.log(req.params.id);
+  const maincourse = await MainCourse.find({ id: req.params.id })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
+  //   console.log(req.params.id);
   res.render('course/course-detail.ejs', { user: req.user, course: maincourse });
 };
 
@@ -90,7 +95,15 @@ const updateDetailCourse = async (req, res) => {
  */
 const listCourse = async (req, res) => {
   const mainList = await MainCourse.find();
-  res.render('course/course-list.ejs', { user: req.user, courses: mainList });
+  if (!mainList) {
+    logger.error('Cannot get main course list in listCourse().');
+  }
+
+  var flag = false;
+  if (req.query.updated) {
+    flag = true;
+  }
+  res.render('course/course-list.ejs', { user: req.user, courses: mainList, updated: flag });
 };
 
 /**

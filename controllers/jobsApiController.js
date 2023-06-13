@@ -5,9 +5,13 @@ const Sequences = require('../models/Sequence');
 const SubCourse = require('../models/SubCourse');
 const Order = require('../models/Order');
 
+//logger
+const logger = require('../winston/logger');
+
 //config
 const NOTICE_ROW_COUNT = 12;
 const { StatusCodes } = require('http-status-codes');
+const { saveAccessCourse } = require('./customerApiController');
 
 //function
 const getNoticeList = async (req, res) => {
@@ -169,15 +173,40 @@ const updateCustomerToSubCourse = async (req, res) => {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강등록을 하지 않은 강의 입니다. 수강등록 이후에 이용해주세요.' });
   }
 };
-
+/**
+ * @brief [Frontend API] createOrder
+ *
+ * @param {*} req
+ * @param {*} res
+ */
 const createOrder = async (req, res) => {
+  const courses = req.body.courses;
   Sequences.findOneAndUpdate({ name: 'order-number' }, { $inc: { counter: 1 } })
     .then((result) => {
       const currentTime = Math.floor(Date.now() / (1000 * 60));
       const { counter } = result;
       const formattedNumber = `${currentTime}-${counter.toString().padStart(5, '0')}`;
-      Order.create({ id: formattedNumber, customerid: req.user.num, amount: req.body.amount, courses: req.body.courses, paymentid: req.body.paymentid })
+      Order.create({ id: formattedNumber, customerid: req.user.num, amount: req.body.amount, courses: courses, paymentid: req.body.paymentid })
         .then(() => {
+          courses.forEach((course) => {
+            // update access course in customer docs
+            if (!req.user.accesscourse.includes(course)) {
+              var saveFlag = saveAccessCourse(req.user.email, course);
+              if (!saveFlag) {
+                logger.error('saveAccessCourse has issue, please check couresid ' + course);
+              }
+              req.user.accesscourse.push(course);
+
+              MainCourse.findOneAndUpdate({ id: course }, { $inc: { customerCount: 1 } })
+                .then(() => {
+                  logger.info('Successfully updated count on MainCourse');
+                })
+                .catch((err) => {
+                  logger.error(err + 'MainCourse ID : [' + course + ']');
+                });
+            }
+          });
+          logger.info('User accesscourse has been updated with successfuly payment');
           res.json({ msg: `성공적으로 오더 #${formattedNumber}가 생성되었습니다.` });
         })
         .catch((err) => {
@@ -185,6 +214,7 @@ const createOrder = async (req, res) => {
         });
     })
     .catch((err) => {
+      logger.error(err);
       res.status(StatusCodes.BAD_REQUEST).json({ msg: 'sequence넘버를 확인할 수 없습니다.' });
     });
 };

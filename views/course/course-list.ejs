@@ -39,6 +39,11 @@
             <!-- board list area -->
               <div id="board-list">
                   <div class="container">
+                    <% if(updated){ %>
+                    <div class="alert alert-success" role="alert">
+                      성공적으로 강의분류가 생성되었습니다.
+                    </div>
+                      <% } %>
                     <div class="notice-act-section">
                     </div>
                       <table class="board-table">
@@ -61,7 +66,7 @@
                                     <p>테스트</p>
                                   </th>
                                   <td><%= courses[i].term %>강</td>
-                                  <td>5명</td>
+                                  <td><%= courses[i].customerCount %>명</td>
                                   <td>
                                     <% const date = courses[i].createtime %>
                                     <%= date.toLocaleDateString('ko-KR') %>
