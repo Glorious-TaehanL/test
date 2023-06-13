@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerCustomer, editCustomer, loginCustomer, checkCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
+const { registerCustomer, withdrawalCustomer, editCustomer, loginCustomer, checkCustomer, saveCart, findCustomer, getList, getCustomerInfo } = require('../controllers/customerApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
 
@@ -33,6 +33,32 @@ const router = express.Router();
  *       headers: {}
  */
 router.post('/register', registerCustomer);
+
+/**
+ * @swagger
+ * paths:
+ *  /customer/withdrawal:
+ *   post:
+ *    tags: [Customer]
+ *    summary: Withdrawal Customer
+ *    operationId: withdrawalCustomer
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/CustomerRequest'
+ *          example:
+ *    responses:
+ *     '200':
+ *       description: 'Successfully delete customer'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to delete customer'
+ *       headers: {}
+ */
+router.post('/withdrawal', authenticateUser, withdrawalCustomer);
 
 /**
  * @swagger

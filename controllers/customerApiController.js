@@ -44,6 +44,24 @@ const registerCustomer = async (req, res) => {
 };
 
 /**
+ * @brief [ Frontend-API ] withdrawalCustomer
+ *
+ * @param {*} req user token.
+ * @param {*} res
+ */
+const withdrawalCustomer = async (req, res) => {
+  const userEmail = req.user.userEmail;
+
+  Customer.deleteOne({ email: userEmail })
+    .then(() => {
+      res.status(StatusCodes.OK).json({ msg: '회원탈퇴가 성공적으로 이루어졌습니다.' });
+    })
+    .catch(() => {
+      throw new CustomError.BadRequestError(`회원탈퇴 중 알수없는 에러가 발생되었습니다.`);
+    });
+};
+
+/**
  * @brief [ Frontend-API ] editCustomer
  *
  * @param {*} req req.body customer registration information
@@ -161,6 +179,7 @@ const getCustomerInfo = async (req, res) => {
 
 module.exports = {
   registerCustomer,
+  withdrawalCustomer,
   editCustomer,
   loginCustomer,
   checkCustomer,

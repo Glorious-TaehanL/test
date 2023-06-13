@@ -91,6 +91,7 @@ const getContinueSubCourse = async (req, res) => {
   if (accesscourseArr.length != 0) {
     if (accesscourseArr.includes(parseInt(id))) {
       const customerSubcourses = await SubCourse.find({ maincategory: id, customer: { $nin: [req.user.num] } }).sort({ id: 1 });
+      console.log(customerSubcourses);
       if (!customerSubcourses) {
         res.status(StatusCodes.OK).json({ msg: '더이상 수강할 강의가 존재하지 않습니다.' });
       } else {
@@ -152,19 +153,18 @@ const updateCustomerToSubCourse = async (req, res) => {
     if (!doc) {
       res.status(StatusCodes.NOT_FOUND).json({ msg: '수강콘탠츠를 찾을 수 없습니다. 다시한번 확인해주세요.' });
     } else {
-      if (doc.customer) {
-        const arr = Object.values(doc.customer);
-        if (arr.includes(req.user.num)) {
-          res.status(StatusCodes.OK);
+      const arr = Object.values(doc.customer);
+      if (arr.includes(req.user.num)) {
+        res.status(StatusCodes.OK).json({ msg: '이미 수강완료한 강의 입니다.' });
+      } else {
+        const updCourse = await SubCourse.findOneAndUpdate({ id: subcourseId }, { customer: req.user.num }, { new: true });
+        if (!updCourse) {
+          res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강진도등록에서 알수없는 에러가 발생했습니다.' });
         } else {
-          const updCourse = await SubCourse.findOneAndUpdate({ id: subcourseId }, { customer: req.user.num });
-          if (!updCourse) {
-            res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강진도등록에서 알수없는 에러가 발생했습니다.' });
-          }
+          res.status(StatusCodes.OK).json({ updCourse });
         }
       }
     }
-    res.status(StatusCodes.OK).json({ doc });
   } else {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: '수강등록을 하지 않은 강의 입니다. 수강등록 이후에 이용해주세요.' });
   }
