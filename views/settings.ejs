@@ -23,36 +23,51 @@
                         <label class="btn btn-outline-secondary" for="logo-img">
                             업로드
                         </label>
-                        <p>최대 이미지 크기 : 2MB</p>
+                        <br>
+                        <label>미리보기</label>
                         <% if(config) { %>
-                        <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; 
-                                                            background: no-repeat;
-                                                            background-size: contain; 	
-                                                            background-position: center center;
-                                                            background-image: url('/public/images/<%= setting.logo %>');">
-                            <div class="hidden-area"  style="display: none;">
-                                <input id="logo_img_container" name="logo_img_container" type="text" value="<%= setting.logo %>"/>
-                            </div>
-                        <% }else{ %>
-                            <i class="far fa-image" id="img-placeholder"></i>
-                        <% } %>
-                        </div>
-                        <input id="logo-img" name="logo-img" type="file" onchange="setThumbnail(event)" style="display:none;" />
+                            <div id="logo_img_container" style="width: 150px; height: 150px; border: 1px solid; 
+                                                                background: no-repeat;
+                                                                background-size: contain; 	
+                                                                background-position: center center;
+                                                                background-image: url('/public/images/<%= setting.logo %>');">
+                                <div class="hidden-area"  style="display: none;">
+                                    <input id="logo_img_container" name="logo_img_container" type="text" value="<%= setting.logo %>"/>
+                                </div>
+                                <% }else{ %>
+                                    <i class="far fa-image" id="img-placeholder"></i>
+                                    <% } %>
+                                </div>
+                            <input id="logo-img" name="logo-img" type="file" onchange="setThumbnail(event)" style="display:none;" />
+
+                            <p>최대 이미지 크기 : 2MB</p>
                     </div>
         
-                    <div class="container course-information">
-                      <label>사업명</label>
-                      <input id="company_name" name="company_name" type="text" size="60" <% if(config){ %> value="<%= setting.companyname %>" <% } %> /><br>
-                      <label>사업자 연락처</label>
-                      <input id="company_tel" name="company_tel" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  <% if(config){ %> value="<%= setting.companycontact %>" <% } %> /><br>
-                      <label>사업자 이메일</label>
-                      <input id="company_email" name="company_email" type="email" size="60" <% if(config){ %> value="<%= setting.companyemail %>" <% } %> /><br>
-                      <label>사업자 번호</label>
-                      <input id="company_number" name="company_number" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9-]/g,'')"  <% if(config){ %> value="<%= setting.companynumber %>" <% } %> /><br>
-                      <label>통신판매업 번호</label>
-                      <input id="internet_auth_number" name="internet_auth_number" type="text" size="60" <% if(config){ %> value="<%= setting.internetauthnumber %>" <% } %> /><br>
-                      <p>사업자 주소</p>
-                      <textarea name="company_address" cols="100" rows="3"> <% if(config){ %> <%= setting.companyaddress %> <% } %></textarea>
+                    <div class="container course-information d-flex flex-column">
+                        <div class="d-flex pb-3 course-block">
+                            <label >사업명</label>
+                            <input class="flex-grow-1" id="company_name" name="company_name" type="text" size="60" <% if(config){ %> value="<%= setting.companyname %>" <% } %> /><br>
+                        </div>
+                        <div class="d-flex pb-3 course-block">
+                            <label>사업자 연락처</label>
+                            <input class="flex-grow-1" id="company_tel" name="company_tel" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  <% if(config){ %> value="<%= setting.companycontact %>" <% } %> /><br>
+                        </div>
+                        <div class="d-flex pb-3 course-block">
+                            <label>사업자 이메일</label>
+                            <input class="flex-grow-1" id="company_email" name="company_email" type="email" size="60" <% if(config){ %> value="<%= setting.companyemail %>" <% } %> /><br>
+                        </div>
+                        <div class="d-flex pb-3 course-block">
+                            <label>사업자 번호</label>
+                            <input class="flex-grow-1" id="company_number" name="company_number" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9-]/g,'')"  <% if(config){ %> value="<%= setting.companynumber %>" <% } %> /><br>
+                        </div>
+                        <div class="d-flex pb-3 course-block">
+                            <label>통신판매업 번호</label>
+                            <input class="flex-grow-1" id="internet_auth_number" name="internet_auth_number" type="text" size="60" <% if(config){ %> value="<%= setting.internetauthnumber %>" <% } %> /><br>
+                        </div>
+                        <div class="d-flex pb-3 course-block">
+                            <label>사업자 주소</label>
+                            <input class="flex-grow-1" id="company_address" name="company_address" type="text" size="60" <% if(config){ %> value="<%= setting.companyaddress %>" <% } %>/><br>
+                        </div>
                     </div>
                     
                     <button type="submit" class="btn btn-outline-secondary">Submit</button>

@@ -1,0 +1,58 @@
+
+<section class="notice">
+    <div class="page-title">
+          <div class="container">
+              <h3>결제 리스트</h3>
+          </div>
+      </div>
+    
+    <!-- board list area -->
+      <div id="board-list">
+          <div class="container">
+              <table class="board-table">
+                  <thead>
+                  <tr>                      
+                      <th scope="col" class="th-sequence">번호</th>
+                      <th scope="col" class="th-order-num">주문시간</th>
+                      <th scope="col" class="th-order-num">주문번호</th>
+                      <th scope="col" class="th-payment-num">결제번호</th>
+                      <th scope="col" class="th-customer-num">결제금액</th>
+                      <th scope="col" class="th-num">고객명</th>
+                      <th scope="col" class="th-order-title">주문명</th>
+                      <th scope="col" class="th-sequence">관리</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i = 0; i < orders.length; i++){ %>
+                        <tr class="trow">
+                            <td><%= i %></td>
+                            <td><%= orders[i].createtime.toLocaleString('ko-KR',  {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }) %></td>
+                            <td><%= orders[i].id %></td>
+                            <td><%= orders[i].paymentid %></td>
+                            <td><%= orders[i].amount.toLocaleString() %></td>
+                            <td><%= orders[i].customername %></td>
+                            <td>
+                                <%= orders[i].title %>
+                            </td>
+                            <td>
+                               <button class="btn btn-light"><i class="fas fa-search"></i></button>
+                            </td>
+                        </tr>
+                    <% } %>
+                  </tbody>
+              </table>
+              
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1"> << </a>
+                  </li>
+
+                  <li class="page-item">
+                    <a class="page-link" href="#" > >> </a>
+                  </li>
+                </ul>
+              </nav>
+          </div>
+      </div>
+  </section>

@@ -187,7 +187,7 @@ const createOrder = async (req, res) => {
       const currentTime = Math.floor(Date.now() / (1000 * 60));
       const { counter } = result;
       const formattedNumber = `${currentTime}-${counter.toString().padStart(5, '0')}`;
-      Order.create({ id: formattedNumber, customerid: req.user.num, amount: req.body.amount, courses: courses, paymentid: req.body.paymentid })
+      Order.create({ id: formattedNumber, customerid: req.user.num, customername: req.user.name, amount: req.body.amount, title: req.body.title, courses: courses, paymentid: req.body.paymentid })
         .then(() => {
           courses.forEach((course) => {
             // update access course in customer docs
@@ -220,6 +220,22 @@ const createOrder = async (req, res) => {
     });
 };
 
+/**
+ * @brief [Frontend API] getConfig
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * 
+ * @returns
+    "logo": "img1684215456407.ico",
+    "companyname": "(주)coding-lab",
+    "companycontact": "1012341234",
+    "companyemail": "test@test.com",
+    "companynumber": "000-00-00000" //사업자,
+    "companyaddress": "   ",
+    "internetauthnumber": "2020-성남분당A-0000" //통신판매업
+ * 
+ */
 const getConfig = async (req, res) => {
   const config = await Settings.find({});
   if (!config) {
@@ -227,13 +243,6 @@ const getConfig = async (req, res) => {
     res.status(StatusCodes.NOT_FOUND).json({ msg: '저장된 환경변수를 찾을 수 없습니다.' });
   }
   const { logo, companyname, companycontact, companyemail, companynumber, companyaddress, internetauthnumber } = config[0];
-  //   "logo": "img1684215456407.ico",
-  //   "companyname": "(주)coding-lab",
-  //   "companycontact": "1012341234",
-  //   "companyemail": "test@test.com",
-  //   "companynumber": "000-00-00000" //사업자,
-  //   "companyaddress": "   ",
-  //   "internetauthnumber": "2020-성남분당A-0000" //통신판매업
 
   res.status(StatusCodes.OK).json({ data: { logo, companyname, companycontact, companyemail, companynumber, internetauthnumber, companyaddress } });
 };

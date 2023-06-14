@@ -7,14 +7,20 @@ const mongoose = require('mongoose');
  *      title: Order Models
  *      required:
  *       - customerid
+ *       - customername
  *       - amount
+ *       - title
  *       - courses
  *       - paymentid
  *      properties:
  *        customerid:
  *         type: number
+ *        customername:
+ *         type: string
  *        amount:
  *         type: number
+ *        title:
+ *         type: string
  *        courses:
  *         type: [number]
  *        paymentid:
@@ -29,9 +35,17 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     require: [true, 'Please provide customer Id'],
   },
+  customername: {
+    type: String,
+    require: [true, 'Please provide customer Name'],
+  },
   amount: {
     type: Number,
     require: [true, 'Please provide order amount'],
+  },
+  title: {
+    type: String,
+    require: [true, 'Please provide orders title'],
   },
   courses: {
     type: [Number],

@@ -35,6 +35,7 @@ const reportRouter = require('./routes/reportRoute');
 const customerApiRouter = require('./routes/customerApiRoute');
 const jobsApiRouter = require('./routes/jobsApiRoute');
 const settingsRouter = require('./routes/settingsRoute');
+const orderRouter = require('./routes/orderRoute');
 
 //logger
 const logger = require('./winston/logger');
@@ -75,6 +76,7 @@ app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 app.use('/customer', isLoggedin, customerRouter);
 app.use('/settings', isLoggedin, settingsRouter);
+app.use('/orders', isLoggedin, orderRouter);
 
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

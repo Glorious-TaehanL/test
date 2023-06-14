@@ -149,6 +149,31 @@ table {
     width: 15%;
     text-align: center;
   }
+  
+  .board-table .th-sequence{
+    width: 5%;
+    text-align: center;
+  }
+
+  .board-table .th-order-num{
+    width: 15%;
+    text-align: center;
+  }
+
+  .board-table .th-payment-num{
+    width: 15%;
+    text-align: center;
+  }
+
+  .board-table .th-customer-num{
+    width: 15%;
+    text-align: center;
+  }
+
+  .board-table .th-order-title{
+    width: 30%;
+    text-align: center;
+  }
 
   .board-table .th-email{
     width: 30%;
@@ -243,3 +268,7 @@ table {
     width: 100%;
 }
 
+.course-block label{
+  flex: 0.3;
+  padding-top: 5px;
+}

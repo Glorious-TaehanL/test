@@ -300,6 +300,7 @@ router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubC
  *          example:
  *              customerid: 15
  *              amount: 200000
+ *              title: 수채화강의 외 1강
  *              courses: [13]
  *              paymentid: imp_00001
  *    responses:
