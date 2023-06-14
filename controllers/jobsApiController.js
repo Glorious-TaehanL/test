@@ -4,6 +4,7 @@ const Notice = require('../models/Notice');
 const Sequences = require('../models/Sequence');
 const SubCourse = require('../models/SubCourse');
 const Order = require('../models/Order');
+const Settings = require('../models/Settings');
 
 //logger
 const logger = require('../winston/logger');
@@ -219,6 +220,24 @@ const createOrder = async (req, res) => {
     });
 };
 
+const getConfig = async (req, res) => {
+  const config = await Settings.find({});
+  if (!config) {
+    logger.error('Error to get configuration data on getConfig Function.');
+    res.status(StatusCodes.NOT_FOUND).json({ msg: '저장된 환경변수를 찾을 수 없습니다.' });
+  }
+  const { logo, companyname, companycontact, companyemail, companynumber, companyaddress, internetauthnumber } = config[0];
+  //   "logo": "img1684215456407.ico",
+  //   "companyname": "(주)coding-lab",
+  //   "companycontact": "1012341234",
+  //   "companyemail": "test@test.com",
+  //   "companynumber": "000-00-00000" //사업자,
+  //   "companyaddress": "   ",
+  //   "internetauthnumber": "2020-성남분당A-0000" //통신판매업
+
+  res.status(StatusCodes.OK).json({ data: { logo, companyname, companycontact, companyemail, companynumber, internetauthnumber, companyaddress } });
+};
+
 module.exports = {
   getNoticeList,
   getMainCourse,
@@ -231,4 +250,5 @@ module.exports = {
   getSubCourseSampleDetail,
   updateCustomerToSubCourse,
   createOrder,
+  getConfig,
 };

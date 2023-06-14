@@ -11,7 +11,15 @@ const configData = async (req, res) => {
 const updateConfig = (req, res) => {
   const configData = Settings.find({});
   if (!configData) {
-    Settings.create({ logo: req.file.filename, companyname: req.body.company_name, companycontact: req.body.company_tel, companyinfo: req.body.company_information }).then(() => {
+    Settings.create({
+      logo: req.file.filename,
+      companyname: req.body.company_name,
+      companycontact: req.body.company_tel,
+      companyemail: req.body.company_email,
+      companynumber: req.body.company_number,
+      internetauthnumber: req.body.internet_auth_number,
+      companyaddress: req.body.company_address,
+    }).then(() => {
       console.log('Successfully update config');
     });
   } else {
@@ -22,7 +30,18 @@ const updateConfig = (req, res) => {
     } else {
       logoimg = req.body.logo_img_container;
     }
-    Settings.updateOne({}, { logo: logoimg, companyname: req.body.company_name, companycontact: req.body.company_tel, companyinfo: req.body.company_information }).then(() => {
+    Settings.updateOne(
+      {},
+      {
+        logo: logoimg,
+        companyname: req.body.company_name,
+        companycontact: req.body.company_tel,
+        companyemail: req.body.company_email,
+        companynumber: req.body.company_number,
+        internetauthnumber: req.body.internet_auth_number,
+        companyaddress: req.body.company_address,
+      }
+    ).then(() => {
       console.log('Successfull updated');
     });
   }

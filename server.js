@@ -74,7 +74,7 @@ app.use('/auth', authRouter);
 app.use('/course', isLoggedin, courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 app.use('/customer', isLoggedin, customerRouter);
-app.use('/settings', settingsRouter);
+app.use('/settings', isLoggedin, settingsRouter);
 
 //swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));

@@ -41,12 +41,18 @@
                     </div>
         
                     <div class="container course-information">
-                      <p>학원 이름</p>
-                      <input id="company_name" name="company_name" type="text" size="60" <% if(config){ %> value="<%= setting.companyname %>" <% } %> />
-                      <p>학원 연락처</p>
-                      <input id="company_tel" name="company_tel" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  <% if(config){ %> value="<%= setting.companycontact %>" <% } %> />
-                      <p>학원 설명</p>
-                      <textarea name="company_information" cols="100" rows="10"> <% if(config){ %> <%= setting.companyinfo %> <% } %></textarea>
+                      <label>사업명</label>
+                      <input id="company_name" name="company_name" type="text" size="60" <% if(config){ %> value="<%= setting.companyname %>" <% } %> /><br>
+                      <label>사업자 연락처</label>
+                      <input id="company_tel" name="company_tel" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9]/g,'')"  <% if(config){ %> value="<%= setting.companycontact %>" <% } %> /><br>
+                      <label>사업자 이메일</label>
+                      <input id="company_email" name="company_email" type="email" size="60" <% if(config){ %> value="<%= setting.companyemail %>" <% } %> /><br>
+                      <label>사업자 번호</label>
+                      <input id="company_number" name="company_number" type="text" size="60" oninput="this.value=this.value.replace(/[^0-9-]/g,'')"  <% if(config){ %> value="<%= setting.companynumber %>" <% } %> /><br>
+                      <label>통신판매업 번호</label>
+                      <input id="internet_auth_number" name="internet_auth_number" type="text" size="60" <% if(config){ %> value="<%= setting.internetauthnumber %>" <% } %> /><br>
+                      <p>사업자 주소</p>
+                      <textarea name="company_address" cols="100" rows="3"> <% if(config){ %> <%= setting.companyaddress %> <% } %></textarea>
                     </div>
                     
                     <button type="submit" class="btn btn-outline-secondary">Submit</button>

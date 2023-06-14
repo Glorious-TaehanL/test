@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
  *       - mainbanner
  *       - companyname
  *       - companycontact
+ *       - companynumber
  *       - companyinfo
  *      properties:
  *        logo:
@@ -19,8 +20,14 @@ const mongoose = require('mongoose');
  *        companyname:
  *         type: string
  *        companycontact:
+ *         type: string
+ *        companyemail:
+ *         type: string
+ *        companynumber:
  *         type: number
- *        companyinfo:
+ *        internetauthnumber:
+ *         type: string
+ *        companyaddress:
  *         type: string
  */
 
@@ -35,9 +42,18 @@ const ConfigSchema = new mongoose.Schema({
     type: String,
   },
   companycontact: {
-    type: Number,
+    type: String,
   },
-  companyinfo: {
+  companyemail: {
+    type: String,
+  },
+  companynumber: {
+    type: String,
+  },
+  internetauthnumber: {
+    type: String,
+  },
+  companyaddress: {
     type: String,
   },
 });

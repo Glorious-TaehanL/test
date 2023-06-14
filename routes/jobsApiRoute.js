@@ -11,6 +11,7 @@ const {
   updateCustomerToSubCourse,
   createOrder,
   getContinueSubCourse,
+  getConfig,
 } = require('../controllers/jobsApiController');
 const authenticateUser = require('../middleware/authenticationUser');
 const router = express.Router();
@@ -310,5 +311,30 @@ router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubC
  *       headers: {}
  */
 router.post('/order/create', authenticateUser, createOrder);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/config/get:
+ *   get:
+ *    tags: [Jobs]
+ *    summary: get Configuration value
+ *    operationId: getConfiguration
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/configSchema'
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get configuration'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get configuration'
+ *       headers: {}
+ */
+router.get('/config/get', getConfig);
 
 module.exports = router;
