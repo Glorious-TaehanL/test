@@ -38,6 +38,9 @@ const ConfigSchema = new mongoose.Schema({
   mainbanner: {
     type: String,
   },
+  companyrepresentativename: {
+    type: String,
+  },
   companyname: {
     type: String,
   },

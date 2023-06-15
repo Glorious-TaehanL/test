@@ -13,6 +13,7 @@ const updateConfig = (req, res) => {
   if (!configData) {
     Settings.create({
       logo: req.file.filename,
+      companyrepresentativename: req.body.company_representative_name,
       companyname: req.body.company_name,
       companycontact: req.body.company_tel,
       companyemail: req.body.company_email,
@@ -34,6 +35,7 @@ const updateConfig = (req, res) => {
       {},
       {
         logo: logoimg,
+        companyrepresentativename: req.body.company_representative_name,
         companyname: req.body.company_name,
         companycontact: req.body.company_tel,
         companyemail: req.body.company_email,
