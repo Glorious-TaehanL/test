@@ -72,7 +72,7 @@ app.use('/assets', express.static('assets'));
 //Routers
 app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
-app.use('/course', isLoggedin, courseRouter);
+app.use('/course', courseRouter);
 app.use('/notice', isLoggedin, noticeRouter);
 app.use('/customer', isLoggedin, customerRouter);
 app.use('/settings', isLoggedin, settingsRouter);

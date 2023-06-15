@@ -1,7 +1,10 @@
+//models
 const MainCourse = require('../models/MainCourse');
 const Sequences = require('../models/Sequence');
 const SubCourse = require('../models/SubCourse');
+//init
 const StatusCodes = require('http-status-codes');
+const COURSE_ROW_COUNT = process.env.COURSE_ROW_COUNT;
 //logger
 const logger = require('../winston/logger');
 
@@ -40,7 +43,7 @@ const addCourse = async (req, res) => {
       })
         .then(function () {
           logger.info('successfully main course updated.');
-          res.redirect('/course?updated=true');
+          res.redirect('/course?updated=create');
         })
         .catch(function (err) {
           logger.error(err);
@@ -62,6 +65,36 @@ const detailCourse = async (req, res) => {
     });
   //   console.log(req.params.id);
   res.render('course/course-detail.ejs', { user: req.user, course: maincourse });
+};
+
+const deleteCourse = (req, res) => {
+  const { id } = req.body;
+  var issueFlag = false;
+
+  MainCourse.deleteOne({ id: id })
+    .then(() => {
+      logger.info('Successfully delete MainCourse #' + id);
+    })
+    .catch((mainCourseError) => {
+      issueFlag = true;
+      logger.error(mainCourseError);
+    });
+
+  if (!issueFlag) {
+    SubCourse.deleteMany({ maincategory: id })
+      .then(async () => {
+        const totalMainCourse = await (await MainCourse.find()).length;
+        const totalMainCoursePagination = Math.ceil(totalMainCourse / COURSE_ROW_COUNT);
+        var pagenum = 1;
+
+        var mainList = await MainCourse.find().sort({ id: -1 }).limit(COURSE_ROW_COUNT);
+        const flag = 2;
+        res.render('course/course-list.ejs', { user: req.user, courses: mainList, updated: flag, pageindex: { pagenum: pagenum, pagination: totalMainCoursePagination } });
+      })
+      .catch((subCourseErr) => {
+        logger.error('DeleteCourse function Subcourse.deletemany issue : ' + subCourseErr);
+      });
+  }
 };
 
 const updateDetailCourse = async (req, res) => {
@@ -94,16 +127,27 @@ const updateDetailCourse = async (req, res) => {
  * @return course-list.ejs ,user data and course list
  */
 const listCourse = async (req, res) => {
-  const mainList = await MainCourse.find();
-  if (!mainList) {
-    logger.error('Cannot get main course list in listCourse().');
+  const totalMainCourse = await (await MainCourse.find()).length;
+  const totalMainCoursePagination = Math.ceil(totalMainCourse / COURSE_ROW_COUNT);
+  var pagenum = 1;
+
+  var flag = 0;
+  if (req.query.updated === 'create') {
+    flag = 1;
   }
 
-  var flag = false;
-  if (req.query.updated) {
-    flag = true;
+  if (typeof req.query.indexnum !== 'undefined') {
+    var mainList = await MainCourse.find()
+      .sort({ id: -1 })
+      .skip(COURSE_ROW_COUNT * (req.query.indexnum - 1))
+      .limit(COURSE_ROW_COUNT);
+    if (!mainList) {
+      logger.error('Cannot get main course list in listCourse().');
+    }
+  } else if (typeof req.query.indexnum === 'undefined' || req.query.indexnum == 1) {
+    var mainList = await MainCourse.find().sort({ id: -1 }).limit(COURSE_ROW_COUNT);
   }
-  res.render('course/course-list.ejs', { user: req.user, courses: mainList, updated: flag });
+  res.render('course/course-list.ejs', { user: req.user, courses: mainList, updated: flag, pageindex: { pagenum: pagenum, pagination: totalMainCoursePagination } });
 };
 
 /**
@@ -200,6 +244,7 @@ const subCourseEdit = async (req, res) => {
 module.exports = {
   addCourse,
   detailCourse,
+  deleteCourse,
   updateDetailCourse,
   displayAddPost,
   displaySubCourseAdd,

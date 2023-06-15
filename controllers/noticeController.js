@@ -3,7 +3,7 @@ const Sequences = require('../models/Sequence');
 const Notice = require('../models/Notice');
 const moment = require('moment');
 const breadcrum = '공지사항 / ';
-const NOTICE_ROW_COUNT = 12;
+const NOTICE_ROW_COUNT = process.env.NOTICE_ROW_COUNT;
 
 var pageBreadCrumb = '';
 
@@ -166,7 +166,7 @@ const displayListPage = async (req, res) => {
       .skip(NOTICE_ROW_COUNT * (req.query.indexnum - 1))
       .limit(NOTICE_ROW_COUNT);
     pagenum = parseInt(req.query.indexnum);
-  } else {
+  } else if (typeof req.query.indexnum === 'undefined' || req.query.indexnum == 1) {
     var items = await Notice.find({}).sort({ id: -1 }).limit(NOTICE_ROW_COUNT);
   }
 

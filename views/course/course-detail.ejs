@@ -48,14 +48,41 @@
                   <textarea id="summernote"  name="course_information" ></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-outline-secondary">Submit</button>
+                <button type="submit" class="btn btn-outline-secondary">수정</button>
+                <button type="button" id="deleteButton" class="btn btn-outline-danger">제거</button>
             </form>
           </div>
           <script src="/assets/js/summernote.js"></script>
           <script>
+
             $( document ).ready(function() {
                 var data = $('.hidden-data').text();
               $('#summernote').summernote('pasteHTML', data);
+            
+              $('#deleteButton').click(function(){
+                const result = confirm('해당 강의분류에 포함된 모든 강의 컨탠츠가 삭제됩니다.\n 그래도 진행하시겠습니까 ?');
+
+                if (result) {
+                  var postId = $('#id').val();
+                  var currentObj = $(this);
+                  $.ajax({
+                    method:'DELETE',
+                    url: '/course/delete',
+                    data:{id:postId}
+                  }).done(function(result){
+                    $('.content-wrapper').html(result);
+                    const rootUrl = window.location.origin + "/course";
+                    
+                    history.pushState(null, null, rootUrl);
+                  }).fail((err)=>{
+                    console.log(err);
+                  })
+
+                } else {
+                  alert('No를 선택했습니다!');
+                }
+                $('#deleteButton').blur();
+              });
               printVideo();
            });
             function setThumbnail(event){

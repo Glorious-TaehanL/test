@@ -39,10 +39,14 @@
             <!-- board list area -->
               <div id="board-list">
                   <div class="container">
-                    <% if(updated){ %>
+                    <% if(updated == 1){ %>
                     <div class="alert alert-success" role="alert">
-                      성공적으로 강의분류가 생성되었습니다.
+                      성공적으로 강의가 생성되었습니다.
                     </div>
+                      <% } else if(updated == 2){ %>
+                        <div class="alert alert-success" role="alert">
+                          성공적으로 강의와 해당 컨탠츠들이 제거되었습니다.
+                        </div>
                       <% } %>
                     <div class="notice-act-section">
                     </div>
@@ -52,7 +56,7 @@
                               <th scope="col" class="th-code">강의코드</th>
                               <th scope="col" class="th-title">강의명</th>
                               <th scope="col" class="th-student">총강의 차수</th>
-                              <th scope="col" class="th-student">수강생</th>
+                              <th scope="col" class="th-student">누적 수강생</th>
                               <th scope="col" class="th-date">등록일</th>
                           </tr>
                           </thead>
@@ -77,6 +81,23 @@
                           </tbody>
                       </table>
                       
+                    <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1"> << </a>
+                        </li>
+                        <% for( var index = 1; index <= pageindex.pagination; index++ ) { %>
+                          <li class="page-item <% if(pageindex.pagenum == index){ %> active <% } %>">
+                            <a class="page-link" href="course?indexnum=<%= index %>"> 
+                              <%= index %>
+                            </a>
+                          </li>
+                        <% } %>
+                        <li class="page-item">
+                          <a class="page-link" href="#" > >> </a>
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
               </div>
           </section>
