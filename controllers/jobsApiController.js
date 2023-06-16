@@ -14,6 +14,9 @@ const NOTICE_ROW_COUNT = process.env.NOTICE_ROW_COUNT;
 const { StatusCodes } = require('http-status-codes');
 const { saveAccessCourse } = require('./customerApiController');
 
+//moment init
+const moment = require('moment');
+
 //function
 const getNoticeList = async (req, res) => {
   const totalNotice = await (await Notice.find({}, 'id')).length;
@@ -60,6 +63,7 @@ const getProgress = async (req, res) => {
       const customerSubcourseCnt = await (await SubCourse.find({ maincategory: id, customer: { $in: [req.user.num] } })).length;
       const totalSubcouresCnt = await (await SubCourse.find({ maincategory: id })).length;
       var progressRate = (customerSubcourseCnt / totalSubcouresCnt) * 100;
+      ㅍ;
       var progressPercentage = progressRate.toFixed(0);
 
       res.status(StatusCodes.OK).json({ data: progressPercentage });
@@ -69,6 +73,24 @@ const getProgress = async (req, res) => {
   } else {
     res.status(StatusCodes.BAD_REQUEST).json({ msg: '결제된 강의가 없습니다, 결제 이후 수강해주세요.' });
   }
+};
+
+const getExpire = async (req, res) => {
+  const mcourseId = req.params.id;
+  const userId = req.user.num;
+  const period = process.env.EXPIRE_PERIOD_DAY;
+
+  const orderDateObj = await Order.findOne({ customerid: userId, courses: { $in: [mcourseId] } }, 'createtime');
+  if (!orderDateObj) {
+    logger.error('Cannot get Order data in getExpire function');
+  }
+
+  const nowTime = new Date(); // now time
+  const createTime = new Date(orderDateObj.createtime); // Order's create time
+  const addPeriodLater = moment(createTime).add(period, 'days'); // add period date
+  const diff = addPeriodLater.diff(nowTime, 'days');
+
+  res.status(StatusCodes.OK).json({ date: diff });
 };
 
 const getSubCourse = async (req, res) => {
@@ -254,6 +276,7 @@ module.exports = {
   getMainCourseInfor,
   getAccessMainCourse,
   getProgress,
+  getExpire,
   getSubCourse,
   getContinueSubCourse,
   getSubCourseDetail,

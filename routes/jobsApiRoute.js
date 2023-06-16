@@ -5,6 +5,7 @@ const {
   getMainCourseInfor,
   getAccessMainCourse,
   getProgress,
+  getExpire,
   getSubCourse,
   getSubCourseDetail,
   getSubCourseSampleDetail,
@@ -125,6 +126,38 @@ router.get('/maincourse/access/list', authenticateUser, getAccessMainCourse);
  *       headers: {}
  */
 router.get('/maincourse/getprogress/:id', authenticateUser, getProgress);
+
+/**
+ * @swagger
+ * paths:
+ *  /jobs/maincourse/getexpire/{id}:
+ *   parameters:
+ *    - in: path
+ *      name: id
+ *      schema:
+ *      type: string
+ *      required: true
+ *      description: MainCourse Id
+ *   get:
+ *    tags: [Jobs]
+ *    summary: (o) get MainCourse expire date
+ *    operationId: getExpireDate
+ *    requestBody:
+ *      description: ''
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *              $ref: '#/components/schemas/configSchema'
+ *    responses:
+ *     '200':
+ *       description: 'Successfully get MainCourse expire date'
+ *       headers: {}
+ *     '400':
+ *       description: 'Error to get MainCourse expire date'
+ *       headers: {}
+ */
+router.get('/maincourse/getexpire/:id', authenticateUser, getExpire);
 
 /**
  * @swagger
