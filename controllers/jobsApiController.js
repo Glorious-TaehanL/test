@@ -10,20 +10,21 @@ const Settings = require('../models/Settings');
 const logger = require('../winston/logger');
 
 //config
-const NOTICE_ROW_COUNT = 12;
+const NOTICE_ROW_COUNT = process.env.NOTICE_ROW_COUNT;
 const { StatusCodes } = require('http-status-codes');
 const { saveAccessCourse } = require('./customerApiController');
 
 //function
 const getNoticeList = async (req, res) => {
   const totalNotice = await (await Notice.find({}, 'id')).length;
+  const totalNoticePagination = Math.ceil(totalNotice / NOTICE_ROW_COUNT);
   const requestNoticePage = req.params;
   console.log(req.user);
   const items = await Notice.find({})
     .sort({ id: -1 })
     .skip(NOTICE_ROW_COUNT * (requestNoticePage - 1))
     .limit(NOTICE_ROW_COUNT);
-  res.status(StatusCodes.OK).json({ totalNotice, items });
+  res.status(StatusCodes.OK).json({ pageindex: { pagenum: requestNoticePage, pagination: totalNoticePagination }, totalNotice, items });
 };
 
 const getMainCourse = async (req, res) => {
@@ -242,9 +243,9 @@ const getConfig = async (req, res) => {
     logger.error('Error to get configuration data on getConfig Function.');
     res.status(StatusCodes.NOT_FOUND).json({ msg: '저장된 환경변수를 찾을 수 없습니다.' });
   }
-  const { logo, companyname, companycontact, companyemail, companynumber, companyaddress, internetauthnumber } = config[0];
+  const { logo, companyrepresentativename, companyname, companycontact, companyemail, companynumber, companyaddress, internetauthnumber } = config[0];
 
-  res.status(StatusCodes.OK).json({ data: { logo, companyname, companycontact, companyemail, companynumber, internetauthnumber, companyaddress } });
+  res.status(StatusCodes.OK).json({ data: { logo, companyrepresentativename, companyname, companycontact, companyemail, companynumber, internetauthnumber, companyaddress } });
 };
 
 module.exports = {

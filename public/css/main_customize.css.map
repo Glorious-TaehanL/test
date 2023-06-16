@@ -1,0 +1,9 @@
+{
+	"version": 3,
+	"file": "main_customize.css",
+	"sources": [
+		"../scss/layout/test.scss"
+	],
+	"names": [],
+	"mappings": ""
+}
