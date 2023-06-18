@@ -63,7 +63,6 @@ const getProgress = async (req, res) => {
       const customerSubcourseCnt = await (await SubCourse.find({ maincategory: id, customer: { $in: [req.user.num] } })).length;
       const totalSubcouresCnt = await (await SubCourse.find({ maincategory: id })).length;
       var progressRate = (customerSubcourseCnt / totalSubcouresCnt) * 100;
-      ㅍ;
       var progressPercentage = progressRate.toFixed(0);
 
       res.status(StatusCodes.OK).json({ data: progressPercentage });
