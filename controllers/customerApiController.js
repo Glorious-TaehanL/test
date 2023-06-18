@@ -208,7 +208,7 @@ const getCustomerInfo = async (req, res) => {
   if (!customer) {
     throw new UnauthenticatedError('입력하신 사용자 정보와 일치하는 데이터가 없습니다.');
   } else {
-    res.status(StatusCodes.OK).json({ user: { name: customer.name, email: customer.email, phonenumber: customer.phonenumber } });
+    res.status(StatusCodes.OK).json({ user: { name: customer.name, email: customer.email, phonenumber: customer.phonenumber } }, { new: true });
   }
 };
 
