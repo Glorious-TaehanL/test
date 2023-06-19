@@ -65,6 +65,9 @@ const getProgress = async (req, res) => {
       var progressRate = (customerSubcourseCnt / totalSubcouresCnt) * 100;
       var progressPercentage = progressRate.toFixed(0);
 
+      if (progressPercentage == 100) {
+        res.status(StatusCodes.OK).json({ data: progressPercentage });
+      }
       res.status(StatusCodes.OK).json({ data: progressPercentage });
     } else {
       res.status(StatusCodes.OK).json({ msg: '결제된 강의 목록에 해당되지 않습니다.' });
@@ -209,7 +212,16 @@ const createOrder = async (req, res) => {
       const currentTime = Math.floor(Date.now() / (1000 * 60));
       const { counter } = result;
       const formattedNumber = `${currentTime}-${counter.toString().padStart(5, '0')}`;
-      Order.create({ id: formattedNumber, customerid: req.user.num, customername: req.user.name, amount: req.body.amount, title: req.body.title, courses: courses, paymentid: req.body.paymentid })
+      Order.create({
+        id: formattedNumber,
+        customerid: req.user.num,
+        customername: req.user.name,
+        amount: req.body.amount,
+        title: req.body.title,
+        courses: courses,
+        merchantid: req.body.merchantid,
+        paymentid: req.body.paymentid,
+      })
         .then(() => {
           courses.forEach((course) => {
             // update access course in customer docs

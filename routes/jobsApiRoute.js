@@ -335,6 +335,7 @@ router.post('/subcourse/progress/update', authenticateUser, updateCustomerToSubC
  *              amount: 200000
  *              title: 수채화강의 외 1강
  *              courses: [13]
+ *              merchantid: ORD12321
  *              paymentid: imp_00001
  *    responses:
  *     '200':

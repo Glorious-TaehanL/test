@@ -51,6 +51,10 @@ const OrderSchema = new mongoose.Schema({
     type: [Number],
     require: [true, 'Please provide paid courses Id.'],
   },
+  merchantid: {
+    type: String,
+    require: [true, 'Please provide merchant ID'],
+  },
   paymentid: {
     type: String,
     require: [true, 'Please provide payment id.'],
