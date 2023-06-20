@@ -209,11 +209,9 @@ const createOrder = async (req, res) => {
   const courses = req.body.courses;
   Sequences.findOneAndUpdate({ name: 'order-number' }, { $inc: { counter: 1 } })
     .then((result) => {
-      const currentTime = Math.floor(Date.now() / (1000 * 60));
       const { counter } = result;
-      const formattedNumber = `${currentTime}-${counter.toString().padStart(5, '0')}`;
       Order.create({
-        id: formattedNumber,
+        id: counter,
         customerid: req.user.num,
         customername: req.user.name,
         amount: req.body.amount,
@@ -242,10 +240,10 @@ const createOrder = async (req, res) => {
             }
           });
           logger.info('User accesscourse has been updated with successfuly payment');
-          res.json({ msg: `성공적으로 오더 #${formattedNumber}가 생성되었습니다.`, data: order });
+          res.json({ msg: `성공적으로 오더 #${order.merchantid}가 생성되었습니다.`, data: order });
         })
         .catch((err) => {
-          res.json({ msg: `${formattedNumber} 오더를 생성하는데 이슈가 발생되었습니다..확인해주세요.. ${err}` });
+          res.json({ msg: `${order.merchantid} 오더를 생성하는데 이슈가 발생되었습니다..확인해주세요.. ${err}` });
         });
     })
     .catch((err) => {
