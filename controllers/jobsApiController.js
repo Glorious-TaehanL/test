@@ -104,7 +104,7 @@ const getSubCourse = async (req, res) => {
   await SubCourse.find({ maincategory: id }, { id: 1, indexnumber: 1, title: 1, sampling: 1 })
     .then((result) => {
       if (result == '') {
-        res.status(StatusCodes.BAD_REQUEST).json({ msg: '강의콘탠츠가 아직 등록되지 않았습니다.' });
+        res.status(StatusCodes.NOT_FOUND).json({ msg: '강의콘탠츠가 아직 등록되지 않았습니다.' });
       } else {
         res.status(StatusCodes.OK).json({ result });
       }
@@ -240,10 +240,10 @@ const createOrder = async (req, res) => {
             }
           });
           logger.info('User accesscourse has been updated with successfuly payment');
-          res.json({ msg: `성공적으로 오더 #${order.merchantid}가 생성되었습니다.`, data: order });
+          res.json({ msg: `성공적으로 오더 #${req.body.merchantid}가 생성되었습니다.`, data: order });
         })
         .catch((err) => {
-          res.json({ msg: `${order.merchantid} 오더를 생성하는데 이슈가 발생되었습니다..확인해주세요.. ${err}` });
+          res.json({ msg: `${req.body.merchantid} 오더를 생성하는데 이슈가 발생되었습니다..확인해주세요.. ${err}` });
         });
     })
     .catch((err) => {
