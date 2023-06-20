@@ -222,7 +222,7 @@ const createOrder = async (req, res) => {
         merchantid: req.body.merchantid,
         paymentid: req.body.paymentid,
       })
-        .then(() => {
+        .then((order) => {
           courses.forEach((course) => {
             // update access course in customer docs
             if (!req.user.accesscourse.includes(course)) {
@@ -242,7 +242,7 @@ const createOrder = async (req, res) => {
             }
           });
           logger.info('User accesscourse has been updated with successfuly payment');
-          res.json({ msg: `성공적으로 오더 #${formattedNumber}가 생성되었습니다.` });
+          res.json({ msg: `성공적으로 오더 #${formattedNumber}가 생성되었습니다.`, data: order });
         })
         .catch((err) => {
           res.json({ msg: `${formattedNumber} 오더를 생성하는데 이슈가 발생되었습니다..확인해주세요.. ${err}` });
