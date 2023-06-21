@@ -40,7 +40,7 @@ router.post('/register', registerCustomer);
  *  /customer/withdrawal:
  *   post:
  *    tags: [Customer]
- *    summary: Withdrawal Customer
+ *    summary: (o) Withdrawal Customer
  *    operationId: withdrawalCustomer
  *    requestBody:
  *      description: ''
